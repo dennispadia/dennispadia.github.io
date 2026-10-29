@@ -34,6 +34,9 @@ a gold home badge, and direct Projects, Blog, About, and GitHub links.
 Mobile navigation uses larger, title-case labels on one line, 44px-high touch
 targets, and a dedicated gap after the home badge. Check the GitHub arrow and
 badge spacing at 320px as well as typical phone widths.
+The Markdown Studio page uses the same capsule dimensions, home badge, desktop
+uppercase tracking, and 700px mobile navigation breakpoint, with its own Features
+and Download destinations. Keep both page headers visually aligned.
 
 Push to `main`. [Publish website](.github/workflows/pages.yml) validates and deploys
 **only `site`** to GitHub Pages. Repository **Settings > Pages > Source** must be

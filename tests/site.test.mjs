@@ -179,6 +179,39 @@ test('approved styling uses self-hosted assets and no tracking or executable scr
   assert.match(iconLicense, /MIT License/);
 });
 
+test('product navigation matches the homepage capsule on desktop and mobile', () => {
+  const productCss = productHtml.match(/<style>([\s\S]*?)<\/style>/)[1];
+  const declarations = (styles, selector) => {
+    const result = {};
+    for (const [, selectors, body] of styles.matchAll(/(?:^|\n)\s*([^{}\n]+)\{([^{}]*)\}/g)) {
+      if (!selectors.split(',').map(value => value.trim()).includes(selector)) continue;
+      for (const declaration of body.split(';').filter(value => value.trim())) {
+        const colon = declaration.indexOf(':');
+        result[declaration.slice(0, colon).trim()] = declaration.slice(colon + 1).trim();
+      }
+    }
+    return result;
+  };
+  for (const selector of ['.wrap', 'header', '.home', '.home svg', 'nav', 'nav a']) {
+    const expected = declarations(css.split('@media')[0], selector);
+    const actual = declarations(productCss.split('@media')[0], selector);
+    if (selector === 'header') {
+      assert.equal(actual['line-height'], '1.65');
+      delete actual['line-height'];
+    }
+    assert.deepEqual(actual, expected, `Desktop ${selector}`);
+    const marker = '@media (max-width: 700px)';
+    assert.ok(productCss.includes(marker));
+    assert.deepEqual(
+      declarations(productCss.slice(productCss.indexOf(marker)), selector),
+      declarations(css.slice(css.indexOf(marker)), selector),
+      `Mobile ${selector}`,
+    );
+  }
+  assert.match(productHtml, /href="#features">Features/);
+  assert.match(productHtml, /href="#download">Download/);
+});
+
 test('Markdown Studio page has its own canonical URL, screenshots, and software metadata', async () => {
   assert.match(productHtml, /<html lang="en">/);
   assert.match(productHtml, /<meta name="viewport"/);
