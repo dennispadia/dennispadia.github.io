@@ -11,6 +11,8 @@ no build dependencies, analytics, cookies, or external font/image requests.
 ## Editing and publishing
 
 - [Homepage](site/index.html): content, metadata, structured data, and responsive styles.
+- [Markdown Studio page](site/MarkdownStudio/index.html): features, application
+  screenshots, installation and safety notes, and links to the latest release.
 - [Public assets](site/assets): font and license, icons, text-only social card, and app screenshot.
 - [Sitemap](site/sitemap.xml) and [crawler policy](site/robots.txt).
 - [Validation](tests/site.test.mjs): links, metadata, identity, project order, privacy, and asset checks.
@@ -39,8 +41,15 @@ Push to `main`. [Publish website](.github/workflows/pages.yml) validates and dep
 only from `main`. Hosting uses the free public GitHub Pages address.
 
 Keep SAP Testing Automation Framework first and Markdown Studio second. The
-cards link to their respective repositories. Do not hard-code application
+SAP card links to its repository; Markdown Studio links to
+`https://dennispadia.github.io/MarkdownStudio/` (case-sensitive), with its own
+GitHub and latest-release links. Do not hard-code application
 versions or version-specific downloads: releases are managed by each project.
+The product page links to GitHub's `/releases/latest`, not a versioned MSI
+filename. Publishing a new standard release updates that destination without a
+website edit, build dependency, or runtime API request. Drafts and prereleases
+are not the latest standard release. Screenshots describe the demonstrated
+features rather than claiming to show the newest build.
 When adding projects, update the cards and count. The About me section remains
 below the projects and blog card. Keep the blog card linked to the full
 Microsoft Tech Community profile so readers can find all posts without maintaining
@@ -60,6 +69,11 @@ biography, credentials, ratings, reviews, or project claims.
    published after verification so Google can recheck ownership.
 4. Submit `https://dennispadia.github.io/sitemap.xml`.
 5. Inspect the homepage and request indexing once.
+
+The sitemap lists both the portfolio homepage and `/MarkdownStudio/`. The
+product page is a static HTML page in this repository, not a separate project
+Pages deployment. When first published, inspect that URL in Search Console
+and optionally request indexing; no separate sitemap submission is needed.
 
 Verification and sitemap submission require access to the owner's Google account.
 Metadata and verification do not guarantee indexing or search rankings.

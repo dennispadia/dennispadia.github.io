@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Markdown Studio - Local-first Markdown editor for Windows</title>
+  <meta name="description" content="A free, local-first Windows Markdown editor with visual editing, Source + Preview, offline Mermaid diagrams, and Word/PDF export. Explore screenshots and downloads.">
+  <meta name="theme-color" content="#111416">
+  <link rel="canonical" href="https://dennispadia.github.io/MarkdownStudio/">
+  <link rel="icon" href="../assets/markdown-studio.svg" type="image/svg+xml">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Dennis Padia">
+  <meta property="og:title" content="Markdown Studio - Write locally. See clearly.">
+  <meta property="og:description" content="Visual editing, Source + Preview, offline diagrams, and Word/PDF export. Free and MIT licensed. Windows x64; unsigned installer.">
+  <meta property="og:url" content="https://dennispadia.github.io/MarkdownStudio/">
+  <meta property="og:image" content="https://dennispadia.github.io/assets/images/source-preview.png">
+  <meta property="og:image:alt" content="Markdown Studio with editable Markdown beside its live preview, a rendered Mermaid diagram, and a table.">
+  <meta property="og:image:width" content="1440">
+  <meta property="og:image:height" content="1000">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Markdown Studio - Local-first Markdown editor">
+  <meta name="twitter:description" content="A free Windows Markdown editor with offline diagrams and Word/PDF export. MIT licensed, shared as-is without support.">
+  <meta name="twitter:image" content="https://dennispadia.github.io/assets/images/source-preview.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Markdown Studio",
+    "url": "https://dennispadia.github.io/MarkdownStudio/",
+    "description": "A local-first Windows Markdown editor with visual editing, Source + Preview, offline Mermaid diagrams, and Word/PDF export.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Windows 10/11 x64",
+    "isAccessibleForFree": true,
+    "license": "https://github.com/dennispadia/MarkdownStudio/blob/main/LICENSE",
+    "installUrl": "https://github.com/dennispadia/MarkdownStudio/releases/latest",
+    "screenshot": "https://dennispadia.github.io/assets/images/source-preview.png",
+    "author": { "@type": "Person", "name": "Dennis Padia", "url": "https://dennispadia.github.io/" }
+  }
+  </script>
+  <style>
+    @font-face { font-family: Montserrat; font-style: normal; font-weight: 300; font-display: swap; src: url("../assets/fonts/montserrat-300.ttf") format("truetype"); }
+    :root { color-scheme: dark; font-family: Montserrat, sans-serif; font-weight: 300; color: #e8e8e5; background: #111416; font-synthesis: none; }
+    * { box-sizing: border-box; }
+    body { display: flow-root; margin: 0; padding-bottom: 48px; font-size: 14px; line-height: 1.8; background: radial-gradient(ellipse 75% 650px at 85% 4%, #29384070, transparent 80%), #111416; }
+    a { color: inherit; text-decoration: none; }
+    a:focus-visible { outline: 2px solid #dcbc7d; outline-offset: 5px; border-radius: 3px; }
+    .skip-link { position: absolute; top: 8px; left: 8px; padding: 8px 16px; background: #191a1b; transform: translateY(-200%); z-index: 1; }
+    .skip-link:focus { transform: none; }
+    .wrap { max-width: 1000px; width: calc(100% - 96px); margin-inline: auto; }
+    header { margin-top: 40px; min-height: 58px; display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 6px 18px; border: 1px solid #7c91943d; border-radius: 30px; background: linear-gradient(110deg, #1b2728, #191f22 48%, #191c1e); }
+    .home { display: flex; align-items: center; gap: 11px; min-height: 44px; font-size: 12px; white-space: nowrap; }
+    .home svg { width: 30px; height: 30px; padding: 7px; color: #dcbc7d; background: linear-gradient(135deg, #194c44, #092b2b); border: 1px solid #bfa57844; border-radius: 8px; }
+    nav { display: flex; align-items: center; gap: 28px; }
+    nav a { display: inline-flex; align-items: center; min-height: 44px; font-size: 11px; color: #b0b9b1; white-space: nowrap; }
+    nav a:hover, .text-link:hover { color: #dcbc7d; }
+    .hero { padding-top: 76px; max-width: 800px; }
+    .app-mark { width: 64px; height: 64px; display: block; margin-bottom: 22px; }
+    .eyebrow { color: #a4b09f; font-size: 10px; letter-spacing: 1.2px; text-transform: uppercase; }
+    h1, h2, h3 { font-weight: 300; }
+    h1 { font-size: clamp(40px, 6vw, 68px); line-height: 1.12; letter-spacing: -.05em; margin: 14px 0 20px; }
+    h1 span { color: #9fb3a7; }
+    .lead { max-width: 680px; color: #b2b9b4; font-size: 17px; line-height: 1.9; }
+    .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 28px; }
+    .button { display: inline-flex; align-items: center; justify-content: center; min-height: 46px; padding: 10px 20px; border: 1px solid #547767; border-radius: 9px; background: linear-gradient(135deg, #214f43, #12372f); color: #eee7d7; font-size: 12px; }
+    .button:hover { border-color: #bfa578; }
+    .button--secondary { background: #191e20; border-color: #39433e; color: #c1c9c1; }
+    .release-note { font-size: 11px; color: #a8afa8; max-width: 650px; margin-top: 16px; }
+    .release-note strong { color: #dcbc7d; font-weight: 300; }
+    section + section { margin-top: 64px; }
+    h2 { font-size: 27px; line-height: 1.3; letter-spacing: -.7px; margin: 0 0 16px; }
+    .section-intro { color: #a8afa8; max-width: 650px; margin: 0 0 25px; }
+    figure { margin: 0; }
+    .screenshot { display: block; width: 100%; height: auto; border: 1px solid #39483f; border-radius: 10px; }
+    figcaption { color: #a2aaa3; font-size: 11px; line-height: 1.8; margin-top: 12px; }
+    .gallery { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; margin-top: 28px; }
+    .features { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .feature, .download-panel { min-width: 0; padding: 25px; border: 1px solid #2c3732; border-radius: 12px; background: #151a1b; }
+    .feature h3 { font-size: 16px; line-height: 1.5; margin: 0 0 12px; color: #d9e3da; }
+    .feature p { color: #a8afa8; font-size: 12px; margin: 0; }
+    .download-panel p, .download-panel li, .policy p { color: #a8afa8; }
+    .download-panel ol { padding-left: 22px; }
+    .download-panel li { padding-left: 5px; margin: 10px 0; }
+    .text-link { color: #d7d4be; text-decoration: underline; text-underline-offset: 4px; }
+    .warning { border-left: 2px solid #b99f6d; padding-left: 17px; margin-top: 28px; }
+    .warning strong { color: #dcc593; font-weight: 300; }
+    .policy { max-width: 720px; }
+    @media (max-width: 800px) {
+      .features { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 600px) {
+      .wrap { width: calc(100% - 40px); }
+      header { margin-top: 20px; padding-inline: 10px; gap: 14px; }
+      .home { flex-shrink: 0; min-width: 36px; justify-content: center; }
+      .home span { display: none; }
+      nav { flex: 1; justify-content: space-between; gap: 10px; }
+      .hero { padding-top: 48px; }
+      .app-mark { width: 52px; height: 52px; }
+      .lead { font-size: 15px; }
+      .actions { align-items: stretch; }
+      .button { width: 100%; }
+      section + section { margin-top: 48px; }
+      h2 { font-size: 24px; }
+      .gallery, .features { grid-template-columns: 1fr; }
+      .feature, .download-panel { padding: 21px; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="wrap">
+    <header>
+      <a class="home" href="/" aria-label="Dennis Padia homepage"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="m4 10 8-7 8 7v11h-6v-7h-4v7H4Z"/></svg><span>Dennis Padia</span></a>
+      <nav aria-label="Main navigation"><a href="#features">Features</a><a href="#download">Download</a><a href="https://github.com/dennispadia/MarkdownStudio">GitHub &nearr;</a></nav>
+    </header>
+    <main id="main">
+      <section class="hero" aria-labelledby="product-heading">
+        <img class="app-mark" src="../assets/markdown-studio.svg" width="64" height="64" alt="">
+        <p class="eyebrow">Windows x64 &nbsp; / &nbsp; Local-first &nbsp; / &nbsp; MIT licensed</p>
+        <h1 id="product-heading">Markdown Studio<span>.</span></h1>
+        <p class="lead">A calm space for Markdown. Write visually or work in Source + Preview, bring ideas to life with offline diagrams, and export your work to Word or PDF.</p>
+        <div class="actions">
+          <a class="button" href="https://github.com/dennispadia/MarkdownStudio/releases/latest">Get the Windows installer &nearr;</a>
+          <a class="button button--secondary" href="https://github.com/dennispadia/MarkdownStudio">Explore the source &nearr;</a>
+        </div>
+        <p class="release-note">Opens GitHub Releases. Choose the Windows x64 <strong>.msi</strong>; source ZIP and SHA-256 checksums are listed alongside it. <strong>The installer is unsigned</strong> and may trigger Windows or browser warnings.</p>
+      </section>
+      <section id="screenshots" aria-labelledby="screenshots-heading">
+        <h2 id="screenshots-heading">Your words. Source and result.</h2>
+        <p class="section-intro">Real screenshots of the desktop application, using sample documents. No accounts, document uploads, or cloud sync.</p>
+        <figure>
+          <img class="screenshot" src="../assets/images/source-preview.png" width="1440" height="1000" decoding="async" alt="Markdown Studio in Light theme with editable Markdown beside a read-only live preview showing a Mermaid flowchart and table.">
+          <figcaption>Source + Preview: edit Markdown on the left and see the result on the right, with optional synchronized scrolling.</figcaption>
+        </figure>
+        <div class="gallery">
+          <figure>
+            <img class="screenshot" src="../assets/images/dark-split.png" width="1440" height="1000" loading="lazy" decoding="async" alt="Markdown Studio in Dark theme with two documents in paired panes, independent mode controls, checklists, and an offline diagram.">
+            <figcaption>Keep reference notes and a draft side by side in a paired tab.</figcaption>
+          </figure>
+          <figure>
+            <img class="screenshot" src="../assets/images/find-replace.png" width="1440" height="1000" loading="lazy" decoding="async" alt="Markdown Studio Find/Replace bar with regex search, capture-group replacement, match counts, and highlighted Source results.">
+            <figcaption>Find exactly what you need with match-case, whole-word, or regex search.</figcaption>
+          </figure>
+        </div>
+      </section>
+      <section id="features" aria-labelledby="features-heading">
+        <h2 id="features-heading">Made for writing locally.</h2>
+        <p class="section-intro">No account, analytics, or document uploads. The installer includes the desktop runtime; Node.js, Word, and Pandoc are not required.</p>
+        <div class="features">
+          <article class="feature"><h3>Visual or source. Your choice.</h3><p>Write with formatting, lists, tables, and checkboxes, or edit exact Markdown in Source. Source + Preview adds a read-only rendering alongside your text.</p></article>
+          <article class="feature"><h3>Two documents. One workspace.</h3><p>Open multiple tabs, pair two files, resize the divider, and work independently in either pane. Light and Dark themes and Focus mode keep the workspace adaptable.</p></article>
+          <article class="feature"><h3>Diagrams, without a service.</h3><p>Render supported Mermaid diagrams locally in Visual and Preview. Supported diagrams become images in Word and PDF exports.</p></article>
+          <article class="feature"><h3>Share beyond Markdown.</h3><p>Export the active document to Word or PDF, including supported images, syntax-highlighted code, and diagrams. Export does not save the Markdown file.</p></article>
+          <article class="feature"><h3>Find, replace, and navigate.</h3><p>Search with case, whole-word, and regex options, use capture-group replacements, follow the heading outline, and refresh a generated table of contents.</p></article>
+          <article class="feature"><h3>Your files stay yours.</h3><p>Choose embedded images or relative assets. Unsaved-change prompts, external-edit detection, atomic saves, and recovery drafts help protect work. Recovery is not a backup.</p></article>
+        </div>
+      </section>
+      <section id="download" aria-labelledby="download-heading">
+        <div class="download-panel">
+          <p class="eyebrow">Windows 10/11 &nbsp; / &nbsp; x64</p>
+          <h2 id="download-heading">Install once. Write locally.</h2>
+          <ol>
+            <li>Open the latest release and download the Windows x64 MSI. The same release provides a source ZIP and SHA-256 checksums.</li>
+            <li>Verify the download against the published checksums, then run the MSI to install for your current Windows user.</li>
+            <li>Open Markdown Studio from the desktop or Start menu. No account or separate runtime installation is needed.</li>
+          </ol>
+          <div class="actions">
+            <a class="button" href="https://github.com/dennispadia/MarkdownStudio/releases/latest">Installer, source ZIP &amp; checksums &nearr;</a>
+            <a class="button button--secondary" href="https://github.com/dennispadia/MarkdownStudio/blob/main/docs/USER_GUIDE.md">Read the user guide &nearr;</a>
+          </div>
+          <p class="warning"><strong>Unsigned software.</strong> The application and MSI are not code-signed. Windows, browsers, or organization policies may warn about or block them. Install only software you trust, verify the checksums, and follow your organization's policies. Do not disable security protections. Other operating systems and architectures are not packaged or tested.</p>
+        </div>
+      </section>
+      <section class="policy" aria-labelledby="policy-heading">
+        <h2 id="policy-heading">Free to use. Yours to adapt.</h2>
+        <p>Markdown Studio is <a class="text-link" href="https://github.com/dennispadia/MarkdownStudio/blob/main/LICENSE">MIT licensed</a> and shared as-is, without support or promised maintenance. Keep backups of important documents.</p>
+        <p>Independent forks are welcome, including AI-assisted changes. Review and test your version yourself, identify it as your fork, and define your own support policy. See the <a class="text-link" href="https://github.com/dennispadia/MarkdownStudio/blob/main/SUPPORT.md">support policy</a>, <a class="text-link" href="https://github.com/dennispadia/MarkdownStudio/blob/main/CONTRIBUTING.md">forking guidance</a>, and <a class="text-link" href="https://github.com/dennispadia/MarkdownStudio/blob/main/docs/BUILDING.md">build instructions</a>.</p>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

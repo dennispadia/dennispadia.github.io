@@ -2,24 +2,37 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile, readdir, stat } from 'node:fs/promises';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 const root = new URL('../site/', import.meta.url);
 const origin = 'https://dennispadia.github.io/';
 const html = await readFile(new URL('index.html', root), 'utf8');
 const css = html.match(/<style>([\s\S]*?)<\/style>/)[1];
+const productOrigin = new URL('MarkdownStudio/', origin).href;
+const productHtml = await readFile(new URL('MarkdownStudio/index.html', root), 'utf8');
 
 test('local links, images, fonts, and anchors resolve', async () => {
-  const ids = [...html.matchAll(/\bid="([^"]+)"/g)].map(match => match[1]);
-  assert.equal(new Set(ids).size, ids.length, 'Duplicate page id');
-  for (const [, value] of html.matchAll(/(?:href|src)="([^"]+)"/g)) {
-    const target = new URL(value, origin);
-    if (target.origin !== new URL(origin).origin) continue;
-    const file = target.pathname === '/' ? 'index.html' : target.pathname.slice(1);
-    assert.ok((await stat(new URL(file, root))).isFile(), `Missing file: ${target}`);
-    if (target.hash) assert.ok(ids.includes(target.hash.slice(1)), `Missing anchor: ${target}`);
-  }
-  for (const [, resource] of css.matchAll(/url\("([^"]+)"\)/g)) {
-    assert.ok((await stat(new URL(resource, root))).isFile(), `Missing CSS resource: ${resource}`);
+  for (const [pageUrl, markup] of [[origin, html], [productOrigin, productHtml]]) {
+    const ids = [...markup.matchAll(/\bid="([^"]+)"/g)].map(match => match[1]);
+    assert.equal(new Set(ids).size, ids.length, `Duplicate page id: ${pageUrl}`);
+    for (const [, value] of markup.matchAll(/(?:href|src)="([^"]+)"/g)) {
+      const target = new URL(value, pageUrl);
+      if (target.origin !== new URL(origin).origin) continue;
+      const file = target.pathname.slice(1) + (target.pathname.endsWith('/') ? 'index.html' : '');
+      const localFile = new URL(file, root);
+      assert.ok((await stat(localFile)).isFile(), `Missing file: ${target}`);
+      if (target.hash) {
+        const destination = await readFile(localFile, 'utf8');
+        const destinationIds = [...destination.matchAll(/\bid="([^"]+)"/g)].map(match => match[1]);
+        assert.ok(destinationIds.includes(target.hash.slice(1)), `Missing anchor: ${target}`);
+      }
+    }
+    const styles = markup.match(/<style>([\s\S]*?)<\/style>/)[1];
+    for (const [, resource] of styles.matchAll(/url\("([^"]+)"\)/g)) {
+      const target = new URL(resource, pageUrl);
+      assert.equal(target.origin, new URL(origin).origin, `External CSS resource: ${resource}`);
+      assert.ok((await stat(new URL(target.pathname.slice(1), root))).isFile(), `Missing CSS resource: ${resource}`);
+    }
   }
 });
 
@@ -77,7 +90,7 @@ test('project cards and quick links follow the approved order without release ma
   const projects = [...projectSection.matchAll(/<a class="project(?: project--text)?" href="([^"]+)"/g)].map(match => match[1]);
   assert.deepEqual(projects, [
     'https://github.com/Azure/sap-automation-qa',
-    'https://github.com/dennispadia/MarkdownStudio',
+    '/MarkdownStudio/',
   ]);
   assert.match(html, /Microsoft project &nbsp; \/ &nbsp; SAP on Azure/);
   const quickLinks = html.match(/<div class="start">([\s\S]*?)<\/div>/)[1];
@@ -166,10 +179,62 @@ test('approved styling uses self-hosted assets and no tracking or executable scr
   assert.match(iconLicense, /MIT License/);
 });
 
+test('Markdown Studio page has its own canonical URL, screenshots, and software metadata', async () => {
+  assert.match(productHtml, /<html lang="en">/);
+  assert.match(productHtml, /<meta name="viewport"/);
+  assert.equal((productHtml.match(/<h1\b/g) ?? []).length, 1);
+  assert.ok(productHtml.includes(`<link rel="canonical" href="${productOrigin}">`));
+  assert.ok(productHtml.includes(`<meta property="og:url" content="${productOrigin}">`));
+  assert.match(productHtml, /href="#main">Skip to content/);
+  assert.doesNotMatch(productHtml, /noindex|<footer\b|<iframe\b|<script(?! type="application\/ld\+json")/);
+  const data = JSON.parse(productHtml.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1]);
+  assert.equal(data['@type'], 'SoftwareApplication');
+  assert.equal(data.name, 'Markdown Studio');
+  assert.equal(data.url, productOrigin);
+  assert.equal(data.operatingSystem, 'Windows 10/11 x64');
+  assert.equal(data.isAccessibleForFree, true);
+  assert.equal(data.aggregateRating, undefined);
+  const screenshots = [...productHtml.matchAll(/<img class="screenshot"[^>]+>/g)].map(match => match[0]);
+  assert.equal(screenshots.length, 3);
+  for (const image of screenshots) {
+    assert.match(image, /alt="[^"]+"/);
+    assert.match(image, /width="1440" height="1000"/);
+    const source = image.match(/src="([^"]+)"/)[1];
+    const target = new URL(source, productOrigin);
+    assert.equal(target.origin, new URL(origin).origin);
+    const bytes = await readFile(new URL(target.pathname.slice(1), root));
+    assert.equal(bytes.readUInt32BE(16), 1440);
+    assert.equal(bytes.readUInt32BE(20), 1000);
+  }
+  for (const [, value] of productHtml.matchAll(/<meta[^>]+(?:property|name)="(?:og:image|twitter:image)" content="([^"]+)"/g)) {
+    const target = new URL(value);
+    assert.equal(target.origin, new URL(origin).origin);
+    assert.ok((await stat(new URL(target.pathname.slice(1), root))).isFile());
+  }
+  assert.doesNotMatch(productHtml, /googletagmanager|goatcounter|@import/);
+});
+
+test('product download links stay version-independent and preserve safety and support policies', () => {
+  const links = [...productHtml.matchAll(/href="([^"]+)"/g)].map(match => match[1]);
+  const releases = links.filter(value => value.includes('/releases/'));
+  assert.equal(releases.length, 2);
+  assert.ok(releases.every(value => value === 'https://github.com/dennispadia/MarkdownStudio/releases/latest'));
+  assert.doesNotMatch(productHtml, /v?\d+\.\d+\.\d+|releases\/(?:download|tag)\//);
+  assert.match(productHtml, /source ZIP and SHA-256 checksums/);
+  assert.match(productHtml, /installer is unsigned/);
+  assert.match(productHtml, /application and MSI are not code-signed/);
+  assert.match(productHtml, /Do not disable security protections/);
+  assert.match(productHtml, /shared as-is, without support or promised maintenance/);
+  assert.match(productHtml, /Independent forks are welcome, including AI-assisted changes/);
+  for (const document of ['LICENSE', 'SUPPORT.md', 'CONTRIBUTING.md', 'docs/USER_GUIDE.md', 'docs/BUILDING.md']) {
+    assert.ok(links.includes(`https://github.com/dennispadia/MarkdownStudio/blob/main/${document}`));
+  }
+});
+
 test('sitemap and deployment include only the approved static site', async () => {
   const sitemap = await readFile(new URL('sitemap.xml', root), 'utf8');
   const locations = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(match => match[1]);
-  assert.deepEqual(locations, [origin]);
+  assert.deepEqual(locations, [origin, productOrigin]);
   const robots = await readFile(new URL('robots.txt', root), 'utf8');
   assert.ok(robots.includes(`Sitemap: ${origin}sitemap.xml`));
   const workflow = await readFile(new URL('../.github/workflows/pages.yml', import.meta.url), 'utf8');
@@ -181,9 +246,11 @@ test('sitemap and deployment include only the approved static site', async () =>
   for (const entry of files.filter(item => item.isFile())) {
     assert.ok(allowed.has(path.extname(entry.name)), `Unexpected public file: ${entry.name}`);
     assert.ok(!entry.name.startsWith('.'), `Hidden public file: ${entry.name}`);
-    if (path.extname(entry.name) === '.html') pages.push(entry.name);
+    if (path.extname(entry.name) === '.html') {
+      pages.push(path.relative(fileURLToPath(root), path.join(entry.parentPath, entry.name)).split(path.sep).join('/'));
+    }
   }
-  assert.deepEqual(pages.sort(), ['google9f96fa2206ac2708.html', 'index.html'], 'Only the approved homepage and Google verification file may be published');
+  assert.deepEqual(pages.sort(), ['MarkdownStudio/index.html', 'google9f96fa2206ac2708.html', 'index.html'], 'Only the approved portfolio, product page, and Google verification file may be published');
 });
 
 test('Google Search Console verification file retains its required content', async () => {
