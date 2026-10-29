@@ -23,8 +23,8 @@ Blog. On tablets, Blog moves below Projects; on phones, all cards stack and use
 a 320px minimum height so text can grow without clipping. Icons are 44px:
 a sapphire systems cube, the existing emerald quill, and a plum open book.
 Card descriptions use bottom-aligned metadata without screenshot thumbnails.
-The four hero quick links use smaller 32px jewel-tone badges with ivory artwork,
-coordinated with the project and blog icons.
+The four hero quick links use matching 32px emerald badges with fine gold artwork,
+coordinated with Markdown Studio's emerald-and-gold icon.
 
 Push to `main`. [Publish website](.github/workflows/pages.yml) validates and deploys
 **only `site`** to GitHub Pages. Repository **Settings > Pages > Source** must be

@@ -111,14 +111,14 @@ test('portfolio uses square desktop cards, matching local icons, and a mobile st
   assert.doesNotMatch(html, /project-shot|project--text/);
 });
 
-test('quick-link icons use coordinated decorative jewel-tone badges', () => {
+test('quick-link icons use matching decorative emerald-and-gold badges', () => {
   const quickLinks = html.match(/<div class="start">([\s\S]*?)<\/div>/)[1];
   const icons = [...quickLinks.matchAll(/<span class="icon icon--([^"]+)" aria-hidden="true">/g)].map(match => match[1]);
   assert.deepEqual(icons, ['about', 'projects', 'github', 'linkedin']);
   assert.match(css, /\.start \.icon \{[^}]*width: 32px; height: 32px; flex-shrink: 0/);
-  for (const icon of icons) {
-    assert.ok(css.includes(`.icon--${icon} { background: linear-gradient(`));
-  }
+  assert.match(css, /\.start \.icon \{[^}]*background: linear-gradient\(135deg, #194c44, #092b2b\); color: #dcbc7d/);
+  assert.match(css, /\.start \.icon svg rect, \.start \.icon svg circle \{ fill: none; stroke: currentColor; stroke-width: 1\.3; \}/);
+  assert.doesNotMatch(css, /\.icon--(?:about|projects|github|linkedin) \{[^}]*background:/);
 });
 
 test('approved styling uses self-hosted assets and no tracking or executable scripts', async () => {
