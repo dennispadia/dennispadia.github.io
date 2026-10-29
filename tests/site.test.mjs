@@ -73,7 +73,8 @@ test('identity and approved About me text remain accurate without a portrait', a
 
 test('project cards and quick links follow the approved order without release maintenance', () => {
   assert.match(html, /<h2>Projects<\/h2>/);
-  const projects = [...html.matchAll(/<a class="project(?: project--text)?" href="([^"]+)"/g)].map(match => match[1]);
+  const projectSection = html.match(/<section class="projects" id="projects">([\s\S]*?)<\/section>/)[1];
+  const projects = [...projectSection.matchAll(/<a class="project(?: project--text)?" href="([^"]+)"/g)].map(match => match[1]);
   assert.deepEqual(projects, [
     'https://github.com/Azure/sap-automation-qa',
     'https://github.com/dennispadia/MarkdownStudio',
@@ -86,6 +87,15 @@ test('project cards and quick links follow the approved order without release ma
   ]);
   assert.match(css, /\.project-list \{[^}]*grid-auto-rows: 1fr/);
   assert.doesNotMatch(html, /Selected projects|A little about me|A good place to start|<footer\b|Version \d|v\d+\.\d+\.\d+|releases\/(?:download|tag)\//);
+});
+
+test('blog card links to the full Microsoft Tech Community profile after projects', () => {
+  const blog = html.match(/<section class="projects" id="blog" aria-labelledby="blog-heading">([\s\S]*?)<\/section>/)[1];
+  assert.match(blog, /<h2 id="blog-heading">Blog<\/h2>/);
+  assert.match(blog, /<a class="project project--text" href="https:\/\/techcommunity\.microsoft\.com\/users\/dennispadia\/763911">/);
+  assert.match(blog, /My blog on Microsoft Tech Community/);
+  assert.ok(html.indexOf('id="blog"') > html.indexOf('id="projects"'));
+  assert.ok(html.indexOf('id="blog"') < html.indexOf('id="about"'));
 });
 
 test('approved styling uses self-hosted assets and no tracking or executable scripts', async () => {

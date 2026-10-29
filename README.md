@@ -4,7 +4,8 @@ Personal website: **https://dennispadia.github.io/**
 
 A dark, minimalist portfolio with self-hosted Montserrat Light typography,
 a professional introduction and two open-source projects:
-SAP Testing Automation Framework and Markdown Studio. Plain HTML and CSS;
+SAP Testing Automation Framework and Markdown Studio, plus a blog card linking
+to Dennis's Microsoft Tech Community profile. Plain HTML and CSS;
 no build dependencies, analytics, cookies, or external font/image requests.
 
 ## Editing and publishing
@@ -27,7 +28,9 @@ Keep SAP Testing Automation Framework first and Markdown Studio second. The
 cards link to their respective repositories. Do not hard-code application
 versions or version-specific downloads: releases are managed by each project.
 When adding projects, update the cards and count. The About me section remains
-below the projects. The approved design has no footer or entrance animation.
+below the projects and blog card. Keep the blog card linked to the full
+Microsoft Tech Community profile so readers can find all posts without maintaining
+individual article links here. The approved design has no footer or entrance animation.
 
 This is a personal portfolio, not an official Microsoft website. A project
 listing does not imply sole authorship or transfer ownership. Do not invent
