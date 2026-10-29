@@ -3,14 +3,14 @@
 Personal website: **https://dennispadia.github.io/**
 
 A dark, minimalist portfolio with self-hosted Montserrat Light typography,
-a LinkedIn portrait, professional introduction, and two open-source projects:
+a professional introduction and two open-source projects:
 SAP Testing Automation Framework and Markdown Studio. Plain HTML and CSS;
 no build dependencies, analytics, cookies, or external font/image requests.
 
 ## Editing and publishing
 
 - [Homepage](site/index.html): content, metadata, structured data, and responsive styles.
-- [Public assets](site/assets): portrait, font and license, icons, social card, and app screenshot.
+- [Public assets](site/assets): font and license, icons, text-only social card, and app screenshot.
 - [Sitemap](site/sitemap.xml) and [crawler policy](site/robots.txt).
 - [Validation](tests/site.test.mjs): links, metadata, identity, project order, privacy, and asset checks.
 
@@ -47,9 +47,9 @@ token is configured. Metadata does not guarantee indexing or search rankings.
 
 ## License and privacy
 
-Website source is MIT licensed; see [LICENSE](LICENSE). Dennis Padia's portrait,
-obtained from his public LinkedIn profile at his request, is excluded from that
-license. Use of names and trademarks does not imply endorsement.
+Website source is MIT licensed; see [LICENSE](LICENSE).
+Use of names and trademarks does not imply endorsement. The site and social
+preview do not include a personal portrait.
 
 - Montserrat is distributed under the [SIL Open Font License](site/assets/fonts/Montserrat-OFL.txt).
 - The GitHub outline icon is from [Feather](https://github.com/feathericons/feather)

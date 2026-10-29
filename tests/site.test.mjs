@@ -42,13 +42,13 @@ test('homepage has descriptive metadata, social images, and accessible content',
     assert.equal(target.origin, new URL(origin).origin);
     assert.ok((await stat(new URL(target.pathname.slice(1), root))).isFile());
   }
-  const social = await readFile(new URL('assets/social-card.png', root));
+  const social = await readFile(new URL('assets/social-preview.png', root));
   assert.equal(social.subarray(1, 4).toString(), 'PNG');
   assert.equal(social.readUInt32BE(16), 1200);
   assert.equal(social.readUInt32BE(20), 630);
 });
 
-test('identity, portrait, and approved About me text are accurate', async () => {
+test('identity and approved About me text remain accurate without a portrait', async () => {
   const data = JSON.parse(html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1]);
   const person = data['@graph'].find(item => item['@type'] === 'Person');
   assert.equal(person.name, 'Dennis Padia');
@@ -59,11 +59,10 @@ test('identity, portrait, and approved About me text are accurate', async () => 
     'https://github.com/dennispadia',
     'https://www.linkedin.com/in/dennispadia/',
   ]);
-  assert.equal(person.image, `${origin}assets/dennis-padia.jpg`);
-  assert.ok((await stat(new URL('assets/dennis-padia.jpg', root))).size > 0);
-  const about = html.match(/<section class="about"[\s\S]*?<\/section>/)[0];
-  assert.match(about, /<img class="portrait"/);
-  assert.doesNotMatch(html.match(/<section class="hero"[\s\S]*?<\/section>/)[0], /class="portrait"/);
+  assert.equal(person.image, undefined);
+  assert.doesNotMatch(html, /portrait|dennis-padia\.jpg|social-card\.png/);
+  await assert.rejects(stat(new URL('assets/dennis-padia.jpg', root)), { code: 'ENOENT' });
+  await assert.rejects(stat(new URL('assets/social-card.png', root)), { code: 'ENOENT' });
   assert.match(html, /<h1>Dennis<br>Padia/);
   assert.match(html, /<p class="intro">Principal Software Architect at Microsoft<\/p>/);
   assert.match(html, /<h2 class="label" id="about-heading">About me<\/h2>/);
