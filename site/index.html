@@ -3,24 +3,23 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Dennis Padia - Projects &amp; Software</title>
-  <meta name="description" content="Personal projects by Dennis Padia. Explore Markdown Studio, a free, open-source Windows Markdown editor with live preview, Mermaid diagrams, and Word/PDF export.">
-  <meta name="theme-color" content="#090c12">
+  <title>Dennis Padia - Principal Software Architect</title>
+  <meta name="description" content="Dennis Padia, Principal Software Architect at Microsoft. Explore SAP Testing Automation Framework, Markdown Studio, and work on resilient distributed systems.">
+  <meta name="theme-color" content="#111213">
   <link rel="canonical" href="https://dennispadia.github.io/">
   <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="style.css">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Dennis Padia">
-  <meta property="og:title" content="Dennis Padia - Projects &amp; Software">
-  <meta property="og:description" content="Useful software. Independent projects. Explore the things I build and share, starting with Markdown Studio.">
+  <meta property="og:title" content="Dennis Padia - Principal Software Architect">
+  <meta property="og:description" content="Distributed systems, performance, and resiliency. Explore my projects and connect on LinkedIn or GitHub.">
   <meta property="og:url" content="https://dennispadia.github.io/">
   <meta property="og:image" content="https://dennispadia.github.io/assets/social-card.png">
-  <meta property="og:image:alt" content="Dennis Padia. Projects, software, and useful things I build.">
+  <meta property="og:image:alt" content="Dennis Padia - Principal Software Architect at Microsoft">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Dennis Padia - Projects &amp; Software">
-  <meta name="twitter:description" content="Projects, software, and useful things I build and share.">
+  <meta name="twitter:title" content="Dennis Padia - Principal Software Architect">
+  <meta name="twitter:description" content="Distributed systems, performance, and resiliency. Explore my projects and connect on LinkedIn or GitHub.">
   <meta name="twitter:image" content="https://dennispadia.github.io/assets/social-card.png">
   <script type="application/ld+json">
   {
@@ -30,8 +29,11 @@
         "@type": "Person",
         "@id": "https://dennispadia.github.io/#person",
         "name": "Dennis Padia",
+        "jobTitle": "Principal Software Architect",
+        "worksFor": { "@type": "Organization", "name": "Microsoft" },
         "url": "https://dennispadia.github.io/",
-        "sameAs": ["https://github.com/dennispadia"]
+        "image": "https://dennispadia.github.io/assets/dennis-padia.jpg",
+        "sameAs": ["https://github.com/dennispadia", "https://www.linkedin.com/in/dennispadia/"]
       },
       {
         "@type": "WebSite",
@@ -42,53 +44,102 @@
     ]
   }
   </script>
+  <style>
+    @font-face { font-family: Montserrat; font-style: normal; font-weight: 300; font-display: swap; src: url("assets/fonts/montserrat-300.ttf") format("truetype"); }
+    :root { color-scheme: dark; font-family: Montserrat, sans-serif; font-weight: 300; color: #e8e8e5; background: #111213; font-synthesis: none; }
+    * { box-sizing: border-box; }
+    body { margin: 0; padding-bottom: 48px; font-size: 15px; line-height: 1.65; }
+    a { color: inherit; text-decoration: none; }
+    a:focus-visible { outline: 2px solid #c6d6c9; outline-offset: 6px; border-radius: 2px; }
+    .skip-link { position: absolute; top: 8px; left: 8px; padding: 8px 16px; background: #191a1b; transform: translateY(-200%); z-index: 1; }
+    .skip-link:focus { transform: none; }
+    .wrap { max-width: 1000px; width: calc(100% - 96px); margin-inline: auto; }
+    header { margin-top: 40px; height: 45px; display: flex; align-items: center; justify-content: space-between; padding: 0 23px; border: 1px solid #292a2b; border-radius: 30px; background: #191a1b; }
+    .home { display: flex; align-items: center; gap: 9px; font-size: 11px; }
+    .home svg { width: 15px; height: 15px; }
+    nav { display: flex; gap: 55px; }
+    nav a, .label { font-size: 9px; font-weight: 300; letter-spacing: 1.5px; text-transform: uppercase; color: #9c9f9e; }
+    nav a:hover, .start a:hover { color: #f2f2ef; }
+    .hero { display: grid; grid-template-columns: 1.15fr 1fr; gap: 72px; padding-top: 87px; align-items: center; }
+    .portrait { display: block; width: 132px; height: 132px; object-fit: cover; border: 1px solid #333936; border-radius: 50%; }
+    h1 { font-size: clamp(72px, 10.2vw, 122px); font-weight: 300; line-height: .99; letter-spacing: -.055em; margin: 0 0 24px -.055em; }
+    h1 span { color: #899a8f; }
+    .intro { font-size: 15px; line-height: 1.8; max-width: 380px; color: #a7aaa8; margin: 0; padding-left: .25em; }
+    .start a { display: flex; align-items: center; gap: 13px; padding: 13px 0; border-bottom: 1px solid #292c2b; color: #b8bdb8; font-size: 13px; }
+    .start .icon { width: 26px; height: 26px; display: grid; place-items: center; border: 1px solid #333936; border-radius: 6px; color: #9fae9f; }
+    .icon svg { width: 13px; height: 13px; }
+    .arrow { margin-left: auto; color: #767e77; font-size: 16px; }
+    .projects { padding-top: 78px; }
+    .section-heading { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
+    .section-heading h2 { font-size: 14px; font-weight: 300; letter-spacing: -.2px; margin: 0; }
+    .section-heading .label { font-size: 8px; letter-spacing: 1px; }
+    .project { display: grid; grid-template-columns: 1fr 167px; gap: 20px; border: 1px solid #2c302e; border-radius: 10px; padding: 21px 24px; align-items: center; background: #151718; }
+    .project-list { display: grid; grid-auto-rows: 1fr; gap: 16px; }
+    .project--text { grid-template-columns: 1fr; }
+    .project:hover { border-color: #505a52; }
+    .project-name { display: flex; align-items: center; gap: 11px; }
+    .project-name img { width: 27px; height: 27px; border-radius: 6px; }
+    .project-name svg { width: 27px; height: 27px; flex-shrink: 0; color: #a4b09f; }
+    .project h3 { margin: 0; font-size: 17px; font-weight: 300; letter-spacing: -.5px; }
+    .project p { margin: 9px 0 0; font-size: 11px; color: #999f99; }
+    .project .meta { font-size: 8px; letter-spacing: .9px; color: #a4b09f; text-transform: uppercase; margin-top: 11px; }
+    .project-shot { display: block; width: 167px; height: 103px; object-fit: cover; border: 1px solid #3c4740; border-radius: 5px; opacity: .8; }
+    .about { display: grid; grid-template-columns: 132px minmax(0, 1fr); gap: 24px; align-items: start; max-width: 726px; padding-top: 78px; }
+    .about .label { margin: 0 0 12px; }
+    .about p { color: #999f99; font-size: 14px; line-height: 1.9; margin: 0; }
+    @media (max-width: 700px) {
+      .wrap { width: calc(100% - 40px); }
+      header { margin-top: 20px; padding-inline: 16px; }
+      nav { gap: 22px; }
+      .home span { display: none; }
+      .hero { grid-template-columns: 1fr; gap: 45px; padding-top: 62px; }
+      h1 { font-size: 86px; }
+      .intro { font-size: 14px; }
+      .start { max-width: 420px; }
+      .projects { padding-top: 45px; }
+      .project { grid-template-columns: 1fr; }
+      .project-shot { width: 100%; height: auto; margin-top: 6px; }
+      .about { grid-template-columns: 1fr; gap: 16px; padding-top: 55px; }
+    }
+  </style>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
-  <header class="site-header wrap">
-    <a class="brand" href="./" aria-label="Dennis Padia home"><img src="assets/icon.svg" width="38" height="38" alt="">Dennis Padia</a>
-    <nav aria-label="Main navigation"><a href="#projects">Projects</a><a href="#about">About</a><a href="https://github.com/dennispadia">GitHub <span aria-hidden="true">&nearr;</span></a></nav>
-  </header>
-  <main id="main">
-    <section class="hero personal-hero wrap" aria-labelledby="hero-title">
-      <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> Ideas into things you can use</p>
-      <h1 id="hero-title">Dennis Padia<span aria-hidden="true">.</span></h1>
-      <p class="hero-lead">Projects, software, and useful things<br>I build and share.</p>
-      <div class="actions"><a class="button primary" href="#projects">Explore my projects <span aria-hidden="true">&darr;</span></a><a class="button secondary" href="https://github.com/dennispadia">Find me on GitHub <span aria-hidden="true">&nearr;</span></a></div>
-    </section>
-
-    <section class="section project-section wrap" id="projects" aria-labelledby="projects-title">
-      <div class="section-heading"><p class="eyebrow">Selected work</p><h2 id="projects-title">Built to be useful.</h2></div>
-      <article class="project-card" aria-labelledby="markdown-title">
-        <div class="project-intro">
-          <div>
-            <p class="eyebrow">Featured project / 01</p>
-            <div class="project-name"><img src="assets/markdown-studio.svg" width="56" height="56" alt=""><h3 id="markdown-title">Markdown Studio</h3></div>
-            <p>A calmer space for your words. My free Markdown editor for Windows brings visual writing, live preview, offline diagrams, and Word/PDF export together.</p>
-            <div class="project-tags" aria-label="Project details"><span>Windows 10/11 x64</span><span>Free &amp; open source</span><span>Version 0.6.0</span></div>
-          </div>
-          <div class="project-actions">
-            <a class="button primary" href="projects/markdown-studio/">Explore Markdown Studio <span aria-hidden="true">&rarr;</span></a>
-            <a class="text-link" href="https://github.com/dennispadia/MarkdownStudio/releases/download/v0.6.0/Markdown-Studio-0.6.0-x64.msi">Download the Windows installer <span aria-hidden="true">&darr;</span></a>
-            <p><strong>Unsigned installer.</strong> Windows or your browser may show a warning. <a href="projects/markdown-studio/#install-safely">Read installation guidance.</a></p>
-          </div>
+  <div class="wrap">
+    <header>
+      <a class="home" href="#home" aria-label="Home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="m4 10 8-7 8 7v11h-6v-7h-4v7H4Z"/></svg><span>Dennis Padia</span></a>
+      <nav aria-label="Main navigation"><a href="#projects">Projects</a><a href="#about">About</a><a href="https://github.com/dennispadia">GitHub &nearr;</a></nav>
+    </header>
+    <main id="main">
+      <section class="hero" id="home">
+        <div>
+          <h1>Dennis<br>Padia<span>.</span></h1>
+          <p class="intro">Principal Software Architect at Microsoft</p>
         </div>
-        <a class="project-image" href="projects/markdown-studio/"><img src="assets/images/dark-split.png" width="1440" height="1000" loading="lazy" decoding="async" alt="Explore Markdown Studio: two editable documents in Dark theme with checklists, code, and a Mermaid diagram. Actual version 0.6.0 desktop screenshot."></a>
-      </article>
-    </section>
-
-    <section class="section showcase" id="about" aria-labelledby="about-title">
-      <div class="wrap about-grid">
-        <div class="section-heading"><p class="eyebrow">A little about this space</p><h2 id="about-title">Built with curiosity.<br>Shared openly.</h2></div>
-        <div class="about-copy"><p>I'm Dennis Padia. This is a home for my personal projects: a place to share what I build and make it easy to try.</p><p>Markdown Studio is the first featured project here. You can download it, explore the source, or make it your own under the MIT license. It is shared as-is, without support or promised maintenance.</p><a class="text-link" href="https://github.com/dennispadia">Explore my work on GitHub <span aria-hidden="true">&nearr;</span></a></div>
-      </div>
-    </section>
-  </main>
-  <footer class="site-footer personal-footer wrap">
-    <a class="brand" href="./"><img src="assets/icon.svg" width="30" height="30" alt="">Dennis Padia</a>
-    <p>Independent projects. Open possibilities.</p>
-    <nav aria-label="Footer navigation"><a href="#projects">Projects</a><a href="#about">About</a><a href="https://github.com/dennispadia">GitHub</a></nav>
-    <p class="privacy-note">No analytics, ads, cookies, or external fonts are added by this site. Hosted on GitHub Pages; requests are handled under the <a href="https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement">GitHub Privacy Statement</a>.</p>
-  </footer>
+        <div class="start">
+          <a href="#about"><span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="12" cy="8" r="3"/><path d="M5 21v-3a7 7 0 0 1 14 0v3"/></svg></span>About me<span class="arrow" aria-hidden="true">&nearr;</span></a>
+          <a href="#projects"><span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><rect x="14" y="14" width="6" height="6" rx="1"/></svg></span>Explore my projects<span class="arrow" aria-hidden="true">&nearr;</span></a>
+          <a href="https://github.com/dennispadia"><span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 19 4.77 5.07 5.07 0 0 0 18.91 1S17.73.65 15 2.48a13.38 13.38 0 0 0-7 0C5.27.65 4.09 1 4.09 1A5.07 5.07 0 0 0 4 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 8 18.13V22"/></svg></span>Browse my work at GitHub<span class="arrow" aria-hidden="true">&nearr;</span></a>
+          <a href="https://www.linkedin.com/in/dennispadia/"><span class="icon" aria-hidden="true">in</span>Connect on LinkedIn<span class="arrow" aria-hidden="true">&nearr;</span></a>
+        </div>
+      </section>
+      <section class="projects" id="projects">
+        <div class="section-heading"><h2>Projects</h2><span class="label">02 / Open source</span></div>
+        <div class="project-list">
+          <a class="project project--text" href="https://github.com/Azure/sap-automation-qa">
+            <div><div class="project-name"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="7" rx="2"/><rect x="3" y="14" width="18" height="7" rx="2"/><path d="M7 6.5h.01M7 17.5h.01m5-11h5m-5 11h5"/></svg><h3>SAP Testing Automation Framework <span aria-hidden="true">&nearr;</span></h3></div><p>An open-source framework for validating SAP on Azure configurations, high availability, and backup and recovery.</p><p class="meta">Microsoft project &nbsp; / &nbsp; SAP on Azure &nbsp; / &nbsp; Open source</p></div>
+          </a>
+          <a class="project" href="https://github.com/dennispadia/MarkdownStudio">
+            <div><div class="project-name"><img src="assets/markdown-studio.svg" width="27" height="27" alt=""><h3>Markdown Studio <span aria-hidden="true">&nearr;</span></h3></div><p>A local-first Markdown editor with live preview, diagrams, and Word/PDF export.</p><p class="meta">Windows x64 &nbsp; / &nbsp; Free &amp; MIT licensed</p></div>
+            <img class="project-shot" src="assets/images/dark-split.png" width="1440" height="1000" loading="lazy" decoding="async" alt="Markdown Studio in Dark theme with two documents in paired panes.">
+          </a>
+        </div>
+      </section>
+      <section class="about" id="about" aria-labelledby="about-heading">
+        <img class="portrait" src="assets/dennis-padia.jpg" width="200" height="200" loading="lazy" decoding="async" alt="Dennis Padia">
+        <div><h2 class="label" id="about-heading">About me</h2><p>I'm a Principal Software Architect at Microsoft, focused on designing and validating distributed systems for mission-critical workloads like SAP. My work spans specialized compute, storage, networking, and operating systems, with a strong focus on performance and resiliency.</p></div>
+      </section>
+    </main>
+  </div>
 </body>
 </html>

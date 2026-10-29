@@ -2,42 +2,36 @@
 
 Personal website: **https://dennispadia.github.io/**
 
-A lightweight, responsive portfolio with a Dennis Padia homepage and a dedicated
-[Markdown Studio project page](https://dennispadia.github.io/projects/markdown-studio/).
-Plain HTML and CSS; no external fonts, analytics, dependencies, or application runtime.
+A dark, minimalist portfolio with self-hosted Montserrat Light typography,
+a LinkedIn portrait, professional introduction, and two open-source projects:
+SAP Testing Automation Framework and Markdown Studio. Plain HTML and CSS;
+no build dependencies, analytics, cookies, or external font/image requests.
 
 ## Editing and publishing
 
-- [Homepage](site/index.html): personal introduction and featured projects.
-- [Project page](site/projects/markdown-studio/index.html): features, screenshots, downloads, installation guidance, and FAQs.
-- [Shared styles](site/style.css): dark cinematic layouts, system typography, project cards, responsive layouts, and reduced-motion support.
-- [Public assets](site/assets): personal identity, app icon, social card, and actual app screenshots.
+- [Homepage](site/index.html): content, metadata, structured data, and responsive styles.
+- [Public assets](site/assets): portrait, font and license, icons, social card, and app screenshot.
 - [Sitemap](site/sitemap.xml) and [crawler policy](site/robots.txt).
-
-The moonlit landscape is original SVG artwork in [nightfall.svg](site/assets/nightfall.svg).
-It uses no franchise imagery, logos, characters, or external image services.
+- [Validation](tests/site.test.mjs): links, metadata, identity, project order, privacy, and asset checks.
 
 Run `node --test tests/site.test.mjs` with Node.js 22.15 or newer. No installation
-or build step is needed. Serve `site` with a local static HTTP server and check
-desktop and mobile layouts before publishing.
+or build step is needed. Serve `site` with a local static HTTP server to preview.
+Check desktop and mobile layouts, including equal project-card dimensions.
 
 Push to `main`. [Publish website](.github/workflows/pages.yml) validates and deploys
 **only `site`** to GitHub Pages. Repository **Settings > Pages > Source** must be
-**GitHub Actions**. The protected deployment environment is `github-pages`;
-deployment runs only from `main`. Hosting uses the free public GitHub Pages
-address, with no paid custom domain or service.
+**GitHub Actions**. The deployment environment is `github-pages`; deployment runs
+only from `main`. Hosting uses the free public GitHub Pages address.
 
-When adding projects, update the homepage and sitemap. Do not invent biography,
-credentials, ratings, reviews, or project claims.
+Keep SAP Testing Automation Framework first and Markdown Studio second. The
+cards link to their respective repositories. Do not hard-code application
+versions or version-specific downloads: releases are managed by each project.
+When adding projects, update the cards and count. The About me section remains
+below the projects. The approved design has no footer or entrance animation.
 
-For Markdown Studio updates, verify the public release first, then update visible
-versions, download/release/checksum links, screenshots, and SoftwareApplication
-data together. Preserve unsigned warnings until the specific linked installer is
-actually signed. Its MIT/as-is/no-support policy remains in effect.
-
-Screenshot and application-icon sources:
-[dennispadia/MarkdownStudio](https://github.com/dennispadia/MarkdownStudio),
-MIT licensed. The site does not embed or execute the desktop application.
+This is a personal portfolio, not an official Microsoft website. A project
+listing does not imply sole authorship or transfer ownership. Do not invent
+biography, credentials, ratings, reviews, or project claims.
 
 ## Google Search Console
 
@@ -46,16 +40,28 @@ MIT licensed. The site does not embed or execute the desktop application.
 3. Add Google's HTML verification tag to the homepage `head`, or place its HTML
    verification file in `site`. Publish, then verify ownership.
 4. Submit `https://dennispadia.github.io/sitemap.xml`.
-5. Inspect the homepage and project page and request indexing once.
+5. Inspect the homepage and request indexing once.
 
 Verification requires access to the owner's Google account. No verification
-token is currently configured. Metadata and structured data do not guarantee
-Google indexing, ranking, or rich results; never fabricate app reviews or ratings.
+token is configured. Metadata does not guarantee indexing or search rankings.
 
 ## License and privacy
 
-Website source is MIT licensed; see [LICENSE](LICENSE). Markdown Studio has its
-[own license](https://github.com/dennispadia/MarkdownStudio/blob/main/LICENSE)
-and [support policy](https://github.com/dennispadia/MarkdownStudio/blob/main/SUPPORT.md).
-The site adds no analytics, ads, cookies, or third-party scripts. GitHub hosts it
-under its [Privacy Statement](https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement).
+Website source is MIT licensed; see [LICENSE](LICENSE). Dennis Padia's portrait,
+obtained from his public LinkedIn profile at his request, is excluded from that
+license. Use of names and trademarks does not imply endorsement.
+
+- Montserrat is distributed under the [SIL Open Font License](site/assets/fonts/Montserrat-OFL.txt).
+- The GitHub outline icon is from [Feather](https://github.com/feathericons/feather)
+  under its [MIT license](site/assets/Feather-LICENSE.txt).
+- The app icon and screenshot are from
+  [Markdown Studio](https://github.com/dennispadia/MarkdownStudio), MIT licensed.
+  Its [license](https://github.com/dennispadia/MarkdownStudio/blob/main/LICENSE)
+  and [support policy](https://github.com/dennispadia/MarkdownStudio/blob/main/SUPPORT.md)
+  remain unchanged. The site does not embed or execute the desktop application.
+- SAP Testing Automation Framework remains maintained in its
+  [Microsoft-owned repository](https://github.com/Azure/sap-automation-qa).
+
+The site adds no analytics, ads, cookies, or third-party scripts. Assets are
+hosted locally rather than embedded from LinkedIn or Google Fonts. GitHub hosts
+the site under its [Privacy Statement](https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement).
