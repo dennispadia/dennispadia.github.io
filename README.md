@@ -37,13 +37,15 @@ biography, credentials, ratings, reviews, or project claims.
 
 1. Sign in to https://search.google.com/search-console/.
 2. Add the URL-prefix property `https://dennispadia.github.io/`.
-3. Add Google's HTML verification tag to the homepage `head`, or place its HTML
-   verification file in `site`. Publish, then verify ownership.
+3. The supplied [HTML verification file](site/google9f96fa2206ac2708.html) is
+   published at `https://dennispadia.github.io/google9f96fa2206ac2708.html`.
+   Select **Verify** for the HTML-file method in Search Console. Keep this file
+   published after verification so Google can recheck ownership.
 4. Submit `https://dennispadia.github.io/sitemap.xml`.
 5. Inspect the homepage and request indexing once.
 
-Verification requires access to the owner's Google account. No verification
-token is configured. Metadata does not guarantee indexing or search rankings.
+Verification and sitemap submission require access to the owner's Google account.
+Metadata and verification do not guarantee indexing or search rankings.
 
 ## License and privacy
 

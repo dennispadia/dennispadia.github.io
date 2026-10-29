@@ -120,5 +120,10 @@ test('sitemap and deployment include only the approved static site', async () =>
     assert.ok(!entry.name.startsWith('.'), `Hidden public file: ${entry.name}`);
     if (path.extname(entry.name) === '.html') pages.push(entry.name);
   }
-  assert.deepEqual(pages, ['index.html'], 'Do not publish earlier unapproved pages');
+  assert.deepEqual(pages.sort(), ['google9f96fa2206ac2708.html', 'index.html'], 'Only the approved homepage and Google verification file may be published');
+});
+
+test('Google Search Console verification file retains its required content', async () => {
+  const verification = await readFile(new URL('google9f96fa2206ac2708.html', root), 'utf8');
+  assert.equal(verification.trimEnd(), 'google-site-verification: google9f96fa2206ac2708.html');
 });
