@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Dennis Padia - Principal Software Architect</title>
   <meta name="description" content="Dennis Padia, Principal Software Architect at Microsoft. Explore SAP Testing Automation Framework, Markdown Studio, and work on resilient distributed systems.">
-  <meta name="theme-color" content="#111213">
+  <meta name="theme-color" content="#111416">
   <link rel="canonical" href="https://dennispadia.github.io/">
   <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
   <meta property="og:type" content="website">
@@ -45,20 +45,22 @@
   </script>
   <style>
     @font-face { font-family: Montserrat; font-style: normal; font-weight: 300; font-display: swap; src: url("assets/fonts/montserrat-300.ttf") format("truetype"); }
-    :root { color-scheme: dark; font-family: Montserrat, sans-serif; font-weight: 300; color: #e8e8e5; background: #111213; font-synthesis: none; }
+    :root { color-scheme: dark; font-family: Montserrat, sans-serif; font-weight: 300; color: #e8e8e5; background: #111416; font-synthesis: none; }
     * { box-sizing: border-box; }
-    body { margin: 0; padding-bottom: 48px; font-size: 15px; line-height: 1.65; }
+    body { display: flow-root; margin: 0; padding-bottom: 48px; font-size: 15px; line-height: 1.65; background: radial-gradient(ellipse 75% 650px at 85% 4%, #29384070 0%, #1b252b38 45%, transparent 80%), radial-gradient(ellipse 55% 500px at 10% 12%, #6b624610 0%, transparent 75%), #111416; background-repeat: no-repeat; }
     a { color: inherit; text-decoration: none; }
     a:focus-visible { outline: 2px solid #c6d6c9; outline-offset: 6px; border-radius: 2px; }
     .skip-link { position: absolute; top: 8px; left: 8px; padding: 8px 16px; background: #191a1b; transform: translateY(-200%); z-index: 1; }
     .skip-link:focus { transform: none; }
     .wrap { max-width: 1000px; width: calc(100% - 96px); margin-inline: auto; }
-    header { margin-top: 40px; height: 45px; display: flex; align-items: center; justify-content: space-between; padding: 0 23px; border: 1px solid #292a2b; border-radius: 30px; background: #191a1b; }
-    .home { display: flex; align-items: center; gap: 9px; font-size: 11px; }
-    .home svg { width: 15px; height: 15px; }
-    nav { display: flex; gap: 55px; }
+    header { margin-top: 40px; height: 58px; display: flex; align-items: center; justify-content: space-between; padding: 0 18px; border: 1px solid #7c91943d; border-radius: 30px; background: linear-gradient(110deg, #1b2728, #191f22 48%, #191c1e); box-shadow: inset 0 1px 0 #e7d6a00a, 0 6px 24px #00000014; }
+    .home { display: flex; align-items: center; gap: 11px; font-size: 12px; color: #e4e9e1; }
+    .home svg { width: 30px; height: 30px; padding: 7px; color: #dcbc7d; background: linear-gradient(135deg, #194c44, #092b2b); border: 1px solid #bfa57844; border-radius: 8px; }
+    nav { display: flex; gap: 32px; }
     nav a, .label { font-size: 9px; font-weight: 300; letter-spacing: 1.5px; text-transform: uppercase; color: #9c9f9e; }
-    nav a:hover, .start a:hover { color: #f2f2ef; }
+    nav a { font-size: 10px; letter-spacing: 1.2px; color: #b0b9b1; padding: 7px 0; }
+    nav a:hover { color: #dcbc7d; }
+    .start a:hover { color: #f2f2ef; }
     .hero { display: grid; grid-template-columns: 1.15fr 1fr; gap: 72px; padding-top: 87px; align-items: center; }
     h1 { font-size: clamp(72px, 10.2vw, 122px); font-weight: 300; line-height: .99; letter-spacing: -.055em; margin: 0 0 24px -.055em; }
     h1 span { color: #899a8f; }
@@ -94,8 +96,9 @@
     }
     @media (max-width: 700px) {
       .wrap { width: calc(100% - 40px); }
-      header { margin-top: 20px; padding-inline: 16px; }
-      nav { gap: 22px; }
+      header { margin-top: 20px; height: 56px; padding-inline: 12px; }
+      nav { gap: 16px; }
+      nav a { font-size: 9px; letter-spacing: .8px; }
       .home span { display: none; }
       .hero { grid-template-columns: 1fr; gap: 45px; padding-top: 62px; }
       h1 { font-size: 86px; }
@@ -114,7 +117,7 @@
   <div class="wrap">
     <header>
       <a class="home" href="#home" aria-label="Home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="m4 10 8-7 8 7v11h-6v-7h-4v7H4Z"/></svg><span>Dennis Padia</span></a>
-      <nav aria-label="Main navigation"><a href="#projects">Projects</a><a href="#about">About</a><a href="https://github.com/dennispadia">GitHub &nearr;</a></nav>
+      <nav aria-label="Main navigation"><a href="#projects">Projects</a><a href="#blog">Blog</a><a href="#about">About</a><a href="https://github.com/dennispadia">GitHub &nearr;</a></nav>
     </header>
     <main id="main">
       <section class="hero" id="home">

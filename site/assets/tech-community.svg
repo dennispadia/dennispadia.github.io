@@ -2,13 +2,13 @@
   <title>Microsoft Tech Community - Open Book</title>
   <defs>
     <linearGradient id="plum" x2="1" y2="1">
-      <stop stop-color="#5a4560"/>
-      <stop offset="1" stop-color="#30263e"/>
+      <stop stop-color="#194c44"/>
+      <stop offset="1" stop-color="#092b2b"/>
     </linearGradient>
   </defs>
   <rect width="240" height="240" rx="56" fill="url(#plum)"/>
-  <rect x="1" y="1" width="238" height="238" rx="55" fill="none" stroke="#ddded1" stroke-opacity=".2"/>
-  <path d="M120 77C97 61 74 59 47 64v110c27-5 50-3 73 13 23-16 46-18 73-13V64c-27-5-50-3-73 13Z" fill="#e9e9df"/>
-  <path d="M120 77v110m-53-93 30 7m-30 17 30 7m46-24 30-7m-30 31 30-7" fill="none" stroke="#51425b" stroke-width="6" stroke-linecap="round"/>
+  <rect x="1" y="1" width="238" height="238" rx="55" fill="none" stroke="#7ab4a1" stroke-opacity=".2"/>
+  <path d="M120 77C97 61 74 59 47 64v110c27-5 50-3 73 13 23-16 46-18 73-13V64c-27-5-50-3-73 13Z" fill="#e4eee1"/>
+  <path d="M120 77v110m-53-93 30 7m-30 17 30 7m46-24 30-7m-30 31 30-7" fill="none" stroke="#174039" stroke-width="6" stroke-linecap="round"/>
   <path d="M120 77v110" stroke="#dcbc7d" stroke-width="7"/>
 </svg>

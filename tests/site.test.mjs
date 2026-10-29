@@ -111,6 +111,17 @@ test('portfolio uses square desktop cards, matching local icons, and a mobile st
   assert.doesNotMatch(html, /project-shot|project--text/);
 });
 
+test('all card icons share the approved emerald, ivory, and gold palette', async () => {
+  for (const name of ['sap-framework.svg', 'markdown-studio.svg', 'tech-community.svg']) {
+    const svg = await readFile(new URL(`assets/${name}`, root), 'utf8');
+    assert.match(svg, /<stop stop-color="#194c44"/);
+    assert.match(svg, /<stop offset="1" stop-color="#092b2b"/);
+    assert.match(svg, /fill="#e4eee1"/);
+    assert.match(svg, /stroke="#dcbc7d"/);
+    assert.doesNotMatch(svg, /<script|https?:\/\/(?!www\.w3\.org\/2000\/svg)/);
+  }
+});
+
 test('quick-link icons use matching decorative emerald-and-gold badges', () => {
   const quickLinks = html.match(/<div class="start">([\s\S]*?)<\/div>/)[1];
   const icons = [...quickLinks.matchAll(/<span class="icon icon--([^"]+)" aria-hidden="true">/g)].map(match => match[1]);
@@ -119,6 +130,17 @@ test('quick-link icons use matching decorative emerald-and-gold badges', () => {
   assert.match(css, /\.start \.icon \{[^}]*background: linear-gradient\(135deg, #194c44, #092b2b\); color: #dcbc7d/);
   assert.match(css, /\.start \.icon svg rect, \.start \.icon svg circle \{ fill: none; stroke: currentColor; stroke-width: 1\.3; \}/);
   assert.doesNotMatch(css, /\.icon--(?:about|projects|github|linkedin) \{[^}]*background:/);
+});
+
+test('refined navigation includes Blog and uses the approved charcoal-slate finish', () => {
+  const nav = html.match(/<nav aria-label="Main navigation">([\s\S]*?)<\/nav>/)[1];
+  assert.deepEqual([...nav.matchAll(/<a href="([^"]+)"/g)].map(match => match[1]), [
+    '#projects', '#blog', '#about', 'https://github.com/dennispadia',
+  ]);
+  assert.match(html, /<meta name="theme-color" content="#111416">/);
+  assert.match(css, /body \{ display: flow-root;[^}]*background: radial-gradient\(/);
+  assert.match(css, /header \{[^}]*height: 58px;[^}]*background: linear-gradient\(110deg, #1b2728, #191f22 48%, #191c1e\)/);
+  assert.match(css, /\.home svg \{[^}]*width: 30px; height: 30px/);
 });
 
 test('approved styling uses self-hosted assets and no tracking or executable scripts', async () => {

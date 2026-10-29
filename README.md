@@ -21,10 +21,14 @@ Check desktop and mobile layouts, including equal project-card dimensions.
 The desktop portfolio has three square cards: two under Projects and one under
 Blog. On tablets, Blog moves below Projects; on phones, all cards stack and use
 a 320px minimum height so text can grow without clipping. Icons are 44px:
-a sapphire systems cube, the existing emerald quill, and a plum open book.
+a systems cube, the existing quill, and an open book, all sharing emerald
+backgrounds, ivory artwork, and gold accents.
 Card descriptions use bottom-aligned metadata without screenshot thumbnails.
 The four hero quick links use matching 32px emerald badges with fine gold artwork,
 coordinated with Markdown Studio's emerald-and-gold icon.
+The background is charcoal with a faint, desaturated slate glow and a subtle warm
+counterbalance. The capsule navigation uses a restrained slate-emerald tint,
+a gold home badge, and direct Projects, Blog, About, and GitHub links.
 
 Push to `main`. [Publish website](.github/workflows/pages.yml) validates and deploys
 **only `site`** to GitHub Pages. Repository **Settings > Pages > Source** must be
