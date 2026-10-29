@@ -143,6 +143,14 @@ test('refined navigation includes Blog and uses the approved charcoal-slate fini
   assert.match(css, /\.home svg \{[^}]*width: 30px; height: 30px/);
 });
 
+test('mobile navigation separates the home badge and keeps readable links on one line', () => {
+  const mobile = css.slice(css.indexOf('@media (max-width: 700px)'));
+  assert.match(mobile, /header \{[^}]*gap: 10px/);
+  assert.match(mobile, /\.home \{ flex-shrink: 0; min-width: 40px; min-height: 44px/);
+  assert.match(mobile, /nav \{ flex: 1; min-width: 0; justify-content: space-between; gap: 8px/);
+  assert.match(mobile, /nav a \{[^}]*min-height: 44px;[^}]*font-size: 11px; letter-spacing: 0; text-transform: none; white-space: nowrap/);
+});
+
 test('approved styling uses self-hosted assets and no tracking or executable scripts', async () => {
   assert.match(css, /color-scheme: dark/);
   assert.match(css, /font-family: Montserrat/);

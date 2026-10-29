@@ -29,6 +29,9 @@ coordinated with Markdown Studio's emerald-and-gold icon.
 The background is charcoal with a faint, desaturated slate glow and a subtle warm
 counterbalance. The capsule navigation uses a restrained slate-emerald tint,
 a gold home badge, and direct Projects, Blog, About, and GitHub links.
+Mobile navigation uses larger, title-case labels on one line, 44px-high touch
+targets, and a dedicated gap after the home badge. Check the GitHub arrow and
+badge spacing at 320px as well as typical phone widths.
 
 Push to `main`. [Publish website](.github/workflows/pages.yml) validates and deploys
 **only `site`** to GitHub Pages. Repository **Settings > Pages > Source** must be
