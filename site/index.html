@@ -64,27 +64,36 @@
     h1 span { color: #899a8f; }
     .intro { font-size: 15px; line-height: 1.8; max-width: 380px; color: #a7aaa8; margin: 0; padding-left: .25em; }
     .start a { display: flex; align-items: center; gap: 13px; padding: 13px 0; border-bottom: 1px solid #292c2b; color: #b8bdb8; font-size: 13px; }
-    .start .icon { width: 26px; height: 26px; display: grid; place-items: center; border: 1px solid #333936; border-radius: 6px; color: #9fae9f; }
-    .icon svg { width: 13px; height: 13px; }
+    .start .icon { width: 32px; height: 32px; flex-shrink: 0; display: grid; place-items: center; border: 1px solid #aebfb333; border-radius: 8px; color: #e4eee1; box-shadow: inset 0 1px 0 #ffffff08; }
+    .icon--about { background: linear-gradient(135deg, #194c44, #092b2b); }
+    .icon--projects { background: linear-gradient(135deg, #284c60, #102b3c); }
+    .icon--github { background: linear-gradient(135deg, #5a4560, #30263e); }
+    .icon--linkedin { background: linear-gradient(135deg, #304e65, #172c41); font-family: Arial, sans-serif; font-size: 17px; font-weight: 600; line-height: 1; }
+    .icon svg { width: 18px; height: 18px; }
     .arrow { margin-left: auto; color: #767e77; font-size: 16px; }
-    .projects { padding-top: 78px; }
-    .section-heading { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
+    .portfolio { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; padding-top: 78px; }
+    .projects { grid-column: span 2; min-width: 0; }
+    .blog { min-width: 0; }
+    .section-heading { display: flex; justify-content: space-between; align-items: center; min-height: 24px; margin-bottom: 18px; }
     .section-heading h2 { font-size: 14px; font-weight: 300; letter-spacing: -.2px; margin: 0; }
     .section-heading .label { font-size: 8px; letter-spacing: 1px; }
-    .project { display: grid; grid-template-columns: 1fr 167px; gap: 20px; border: 1px solid #2c302e; border-radius: 10px; padding: 21px 24px; align-items: center; background: #151718; }
-    .project-list { display: grid; grid-auto-rows: 1fr; gap: 16px; }
-    .project--text { grid-template-columns: 1fr; }
+    .project { display: flex; flex-direction: column; aspect-ratio: 1; width: 100%; min-width: 0; min-height: 320px; border: 1px solid #2c302e; border-radius: 10px; padding: 24px; background: #151718; }
+    .project > div { display: flex; flex-direction: column; flex: 1; min-height: 0; }
+    .project-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: 1fr; gap: 18px; }
     .project:hover { border-color: #505a52; }
-    .project-name { display: flex; align-items: center; gap: 11px; }
-    .project-name img { width: 27px; height: 27px; border-radius: 6px; }
-    .project-name svg { width: 27px; height: 27px; flex-shrink: 0; color: #a4b09f; }
-    .project h3 { margin: 0; font-size: 17px; font-weight: 300; letter-spacing: -.5px; }
-    .project p { margin: 9px 0 0; font-size: 11px; color: #999f99; }
-    .project .meta { font-size: 8px; letter-spacing: .9px; color: #a4b09f; text-transform: uppercase; margin-top: 11px; }
-    .project-shot { display: block; width: 167px; height: 103px; object-fit: cover; border: 1px solid #3c4740; border-radius: 5px; opacity: .8; }
+    .project-name { display: flex; flex-direction: column; align-items: flex-start; gap: 16px; }
+    .project-name img { width: 44px; height: 44px; border-radius: 6px; }
+    .project h3 { margin: 0; font-size: 20px; font-weight: 300; line-height: 1.35; letter-spacing: -.5px; }
+    .project p { margin: 17px 0 0; font-size: 12px; line-height: 1.8; color: #999f99; }
+    .project .meta { font-size: 8px; line-height: 1.8; letter-spacing: .9px; color: #a4b09f; text-transform: uppercase; margin-top: auto; padding-top: 18px; }
     .about { max-width: 570px; padding-top: 78px; }
     .about .label { margin: 0 0 12px; }
     .about p { color: #999f99; font-size: 14px; line-height: 1.9; margin: 0; }
+    @media (max-width: 1110px) {
+      .portfolio { grid-template-columns: 1fr; gap: 30px; }
+      .projects { grid-column: auto; }
+      .blog .project { width: calc((100% - 18px) / 2); }
+    }
     @media (max-width: 700px) {
       .wrap { width: calc(100% - 40px); }
       header { margin-top: 20px; padding-inline: 16px; }
@@ -94,9 +103,10 @@
       h1 { font-size: 86px; }
       .intro { font-size: 14px; }
       .start { max-width: 420px; }
-      .projects { padding-top: 45px; }
-      .project { grid-template-columns: 1fr; }
-      .project-shot { width: 100%; height: auto; margin-top: 6px; }
+      .portfolio { padding-top: 45px; }
+      .project-list { grid-template-columns: 1fr; }
+      .project { aspect-ratio: auto; }
+      .blog .project { width: 100%; }
       .about { padding-top: 55px; }
     }
   </style>
@@ -115,30 +125,31 @@
           <p class="intro">Principal Software Architect at Microsoft</p>
         </div>
         <div class="start">
-          <a href="#about"><span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="12" cy="8" r="3"/><path d="M5 21v-3a7 7 0 0 1 14 0v3"/></svg></span>About me<span class="arrow" aria-hidden="true">&nearr;</span></a>
-          <a href="#projects"><span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><rect x="14" y="14" width="6" height="6" rx="1"/></svg></span>Explore my projects<span class="arrow" aria-hidden="true">&nearr;</span></a>
-          <a href="https://github.com/dennispadia"><span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 19 4.77 5.07 5.07 0 0 0 18.91 1S17.73.65 15 2.48a13.38 13.38 0 0 0-7 0C5.27.65 4.09 1 4.09 1A5.07 5.07 0 0 0 4 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 8 18.13V22"/></svg></span>Browse my work at GitHub<span class="arrow" aria-hidden="true">&nearr;</span></a>
-          <a href="https://www.linkedin.com/in/dennispadia/"><span class="icon" aria-hidden="true">in</span>Connect on LinkedIn<span class="arrow" aria-hidden="true">&nearr;</span></a>
+          <a href="#about"><span class="icon icon--about" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="12" cy="8" r="3" fill="currentColor" stroke="none"/><path d="M5 21v-3a7 7 0 0 1 14 0v3" stroke-linecap="round"/></svg></span>About me<span class="arrow" aria-hidden="true">&nearr;</span></a>
+          <a href="#projects"><span class="icon icon--projects" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><rect x="14" y="14" width="6" height="6" rx="1" fill="#dcbc7d"/></svg></span>Explore my projects<span class="arrow" aria-hidden="true">&nearr;</span></a>
+          <a href="https://github.com/dennispadia"><span class="icon icon--github" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 19 4.77 5.07 5.07 0 0 0 18.91 1S17.73.65 15 2.48a13.38 13.38 0 0 0-7 0C5.27.65 4.09 1 4.09 1A5.07 5.07 0 0 0 4 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 8 18.13V22"/></svg></span>Browse my work at GitHub<span class="arrow" aria-hidden="true">&nearr;</span></a>
+          <a href="https://www.linkedin.com/in/dennispadia/"><span class="icon icon--linkedin" aria-hidden="true">in</span>Connect on LinkedIn<span class="arrow" aria-hidden="true">&nearr;</span></a>
         </div>
       </section>
+      <div class="portfolio">
       <section class="projects" id="projects">
         <div class="section-heading"><h2>Projects</h2><span class="label">02 / Open source</span></div>
         <div class="project-list">
-          <a class="project project--text" href="https://github.com/Azure/sap-automation-qa">
-            <div><div class="project-name"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="7" rx="2"/><rect x="3" y="14" width="18" height="7" rx="2"/><path d="M7 6.5h.01M7 17.5h.01m5-11h5m-5 11h5"/></svg><h3>SAP Testing Automation Framework <span aria-hidden="true">&nearr;</span></h3></div><p>An open-source framework for validating SAP on Azure configurations, high availability, and backup and recovery.</p><p class="meta">Microsoft project &nbsp; / &nbsp; SAP on Azure &nbsp; / &nbsp; Open source</p></div>
+          <a class="project" href="https://github.com/Azure/sap-automation-qa">
+            <div><div class="project-name"><img src="assets/sap-framework.svg" width="44" height="44" alt=""><h3>SAP Testing Automation Framework <span aria-hidden="true">&nearr;</span></h3></div><p>An open-source framework for validating SAP on Azure configurations, high availability, and backup and recovery.</p><p class="meta">Microsoft project &nbsp; / &nbsp; SAP on Azure &nbsp; / &nbsp; Open source</p></div>
           </a>
           <a class="project" href="https://github.com/dennispadia/MarkdownStudio">
-            <div><div class="project-name"><img src="assets/markdown-studio.svg" width="27" height="27" alt=""><h3>Markdown Studio <span aria-hidden="true">&nearr;</span></h3></div><p>A local-first Markdown editor with live preview, diagrams, and Word/PDF export.</p><p class="meta">Windows x64 &nbsp; / &nbsp; Free &amp; MIT licensed</p></div>
-            <img class="project-shot" src="assets/images/dark-split.png" width="1440" height="1000" loading="lazy" decoding="async" alt="Markdown Studio in Dark theme with two documents in paired panes.">
+            <div><div class="project-name"><img src="assets/markdown-studio.svg" width="44" height="44" alt=""><h3>Markdown Studio <span aria-hidden="true">&nearr;</span></h3></div><p>A local-first Markdown editor with live preview, diagrams, and Word/PDF export.</p><p class="meta">Windows x64 &nbsp; / &nbsp; Free &amp; MIT licensed</p></div>
           </a>
         </div>
       </section>
-      <section class="projects" id="blog" aria-labelledby="blog-heading">
-        <div class="section-heading"><h2 id="blog-heading">Blog</h2><span class="label">Microsoft Tech Community</span></div>
-        <a class="project project--text" href="https://techcommunity.microsoft.com/users/dennispadia/763911">
-          <div><div class="project-name"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 3h12l4 4v14H4Z"/><path d="M16 3v5h4M8 12h8M8 16h6"/></svg><h3>My blog on Microsoft Tech Community <span aria-hidden="true">&nearr;</span></h3></div><p>Explore my blog posts through my Microsoft Tech Community profile.</p><p class="meta">Articles &nbsp; / &nbsp; Microsoft Tech Community</p></div>
+      <section class="blog" id="blog" aria-labelledby="blog-heading">
+        <div class="section-heading"><h2 id="blog-heading">Blog</h2></div>
+        <a class="project" href="https://techcommunity.microsoft.com/users/dennispadia/763911">
+          <div><div class="project-name"><img src="assets/tech-community.svg" width="44" height="44" alt=""><h3>Microsoft Tech Community <span aria-hidden="true">&nearr;</span></h3></div><p>Explore my blog posts through my Microsoft Tech Community profile.</p><p class="meta">Articles &nbsp; / &nbsp; Microsoft Tech Community</p></div>
         </a>
       </section>
+      </div>
       <section class="about" id="about" aria-labelledby="about-heading">
         <div><h2 class="label" id="about-heading">About me</h2><p>I'm a Principal Software Architect at Microsoft, focused on designing and validating distributed systems for mission-critical workloads like SAP. My work spans specialized compute, storage, networking, and operating systems, with a strong focus on performance and resiliency.</p></div>
       </section>

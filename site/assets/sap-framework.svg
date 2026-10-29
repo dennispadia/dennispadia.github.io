@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="240" viewBox="0 0 240 240">
+  <title>SAP Testing Automation Framework - Systems Cube</title>
+  <defs>
+    <linearGradient id="sapphire" x2="1" y2="1">
+      <stop stop-color="#284c60"/>
+      <stop offset="1" stop-color="#102b3c"/>
+    </linearGradient>
+  </defs>
+  <rect width="240" height="240" rx="56" fill="url(#sapphire)"/>
+  <rect x="1" y="1" width="238" height="238" rx="55" fill="none" stroke="#ddded1" stroke-opacity=".2"/>
+  <path d="m120 49 67 37v73l-67 37-67-37V86Z" fill="#dfe9e5"/>
+  <path d="m53 86 67 38 67-38m-67 38v72" fill="none" stroke="#234555" stroke-width="6"/>
+  <path d="m89 65 67 38v29" fill="none" stroke="#dcbc7d" stroke-width="7"/>
+</svg>

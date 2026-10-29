@@ -18,6 +18,13 @@ no build dependencies, analytics, cookies, or external font/image requests.
 Run `node --test tests/site.test.mjs` with Node.js 22.15 or newer. No installation
 or build step is needed. Serve `site` with a local static HTTP server to preview.
 Check desktop and mobile layouts, including equal project-card dimensions.
+The desktop portfolio has three square cards: two under Projects and one under
+Blog. On tablets, Blog moves below Projects; on phones, all cards stack and use
+a 320px minimum height so text can grow without clipping. Icons are 44px:
+a sapphire systems cube, the existing emerald quill, and a plum open book.
+Card descriptions use bottom-aligned metadata without screenshot thumbnails.
+The four hero quick links use smaller 32px jewel-tone badges with ivory artwork,
+coordinated with the project and blog icons.
 
 Push to `main`. [Publish website](.github/workflows/pages.yml) validates and deploys
 **only `site`** to GitHub Pages. Repository **Settings > Pages > Source** must be
@@ -59,6 +66,9 @@ preview do not include a personal portrait.
 - Montserrat is distributed under the [SIL Open Font License](site/assets/fonts/Montserrat-OFL.txt).
 - The GitHub outline icon is from [Feather](https://github.com/feathericons/feather)
   under its [MIT license](site/assets/Feather-LICENSE.txt).
+- The [systems cube](site/assets/sap-framework.svg) and
+  [open book](site/assets/tech-community.svg) are custom website artwork,
+  not official SAP or Microsoft logos.
 - The app icon and screenshot are from
   [Markdown Studio](https://github.com/dennispadia/MarkdownStudio), MIT licensed.
   Its [license](https://github.com/dennispadia/MarkdownStudio/blob/main/LICENSE)

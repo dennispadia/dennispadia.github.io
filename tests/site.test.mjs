@@ -90,12 +90,35 @@ test('project cards and quick links follow the approved order without release ma
 });
 
 test('blog card links to the full Microsoft Tech Community profile after projects', () => {
-  const blog = html.match(/<section class="projects" id="blog" aria-labelledby="blog-heading">([\s\S]*?)<\/section>/)[1];
+  const blog = html.match(/<section class="blog" id="blog" aria-labelledby="blog-heading">([\s\S]*?)<\/section>/)[1];
   assert.match(blog, /<h2 id="blog-heading">Blog<\/h2>/);
-  assert.match(blog, /<a class="project project--text" href="https:\/\/techcommunity\.microsoft\.com\/users\/dennispadia\/763911">/);
-  assert.match(blog, /My blog on Microsoft Tech Community/);
+  assert.match(blog, /<a class="project" href="https:\/\/techcommunity\.microsoft\.com\/users\/dennispadia\/763911">/);
+  assert.match(blog, /<h3>Microsoft Tech Community <span/);
+  assert.doesNotMatch(blog, /My blog on Microsoft Tech Community/);
   assert.ok(html.indexOf('id="blog"') > html.indexOf('id="projects"'));
   assert.ok(html.indexOf('id="blog"') < html.indexOf('id="about"'));
+});
+
+test('portfolio uses square desktop cards, matching local icons, and a mobile stack', () => {
+  assert.match(css, /\.portfolio \{[^}]*grid-template-columns: repeat\(3, minmax\(0, 1fr\)\)/);
+  assert.match(css, /\.project \{[^}]*aspect-ratio: 1/);
+  assert.match(css, /\.project-name img \{[^}]*width: 44px; height: 44px/);
+  const icons = [...html.matchAll(/<img src="assets\/([^"]+)" width="44" height="44" alt="">/g)].map(match => match[1]);
+  assert.deepEqual(icons, ['sap-framework.svg', 'markdown-studio.svg', 'tech-community.svg']);
+  const mobile = css.slice(css.indexOf('@media (max-width: 700px)'));
+  assert.match(mobile, /\.project-list \{ grid-template-columns: 1fr; \}/);
+  assert.match(mobile, /\.blog \.project \{ width: 100%; \}/);
+  assert.doesNotMatch(html, /project-shot|project--text/);
+});
+
+test('quick-link icons use coordinated decorative jewel-tone badges', () => {
+  const quickLinks = html.match(/<div class="start">([\s\S]*?)<\/div>/)[1];
+  const icons = [...quickLinks.matchAll(/<span class="icon icon--([^"]+)" aria-hidden="true">/g)].map(match => match[1]);
+  assert.deepEqual(icons, ['about', 'projects', 'github', 'linkedin']);
+  assert.match(css, /\.start \.icon \{[^}]*width: 32px; height: 32px; flex-shrink: 0/);
+  for (const icon of icons) {
+    assert.ok(css.includes(`.icon--${icon} { background: linear-gradient(`));
+  }
 });
 
 test('approved styling uses self-hosted assets and no tracking or executable scripts', async () => {
