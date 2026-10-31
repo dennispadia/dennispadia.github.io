@@ -114,6 +114,7 @@ export function applyTheme(html, id, { note = false } = {}) {
   const theme = THEMES[id];
   if (!theme) throw new Error(`Unknown theme: ${id}`);
   let output = html.replace('<html lang="en">', `<html lang="en" data-season="${id}">`);
+  output = output.replace(/((?:src|href)="[^"]*assets\/(?:sap-framework|lekh|tech-community)\.svg)"/g, `$1?season=${id}"`);
   output = output.replace('</style>', `${themeCss(id)}</style>`);
   if (note) {
     output = output.replace('<p class="intro">Principal Software Architect at Microsoft</p>',
@@ -122,6 +123,24 @@ export function applyTheme(html, id, { note = false } = {}) {
   }
   if (!output.includes(`data-season="${id}"`)) throw new Error('Could not apply the seasonal theme');
   return output;
+}
+
+export function applyIconTheme(svg, id) {
+  const theme = THEMES[id];
+  if (!theme) throw new Error(`Unknown theme: ${id}`);
+  const { from, to, accent } = theme.colors;
+  const colors = {
+    '#194c44': from,
+    '#092b2b': to,
+    '#e4eee1': accent,
+    '#dcbc7d': accent,
+    '#174039': to,
+    '#7ab4a1': accent,
+  };
+  for (const color of Object.keys(colors)) {
+    if (!svg.includes(color)) throw new Error(`Missing icon palette color: ${color}`);
+  }
+  return svg.replace(/#(?:194c44|092b2b|e4eee1|dcbc7d|174039|7ab4a1)\b/g, color => colors[color]);
 }
 
 async function main(args) {
@@ -139,6 +158,10 @@ async function main(args) {
   for (const [page, note] of [['index.html', true], [path.join('lekh', 'index.html'), false]]) {
     const file = path.join(out, page);
     await writeFile(file, applyTheme(await readFile(file, 'utf8'), id, { note }));
+  }
+  for (const name of ['sap-framework.svg', 'lekh.svg', 'tech-community.svg']) {
+    const file = path.join(out, 'assets', name);
+    await writeFile(file, applyIconTheme(await readFile(file, 'utf8'), id));
   }
   const stamp = `${date.year}-${String(date.month).padStart(2, '0')}-${String(date.day).padStart(2, '0')}`;
   console.log(`Applied "${id}" theme for ${stamp} (${TIME_ZONE}).`);

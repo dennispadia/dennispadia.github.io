@@ -48,6 +48,9 @@ only from `main`. Hosting uses the free public GitHub Pages address.
 
 The site changes its accent colors, background glow, and a small homepage greeting
 through the year without editing `site`. [The theme calendar](scripts/seasonal-theme.mjs)
+also recolors the project and blog SVG backgrounds and artwork to match the
+quick-link badges, preserving their shapes. Seasonal asset URLs prevent cached
+icons from retaining the previous palette. The calendar
 picks a theme for the current date in `America/Los_Angeles`:
 
 - Monthly defaults: New Year, warmth, spring, blossoms, bloom, summer, summer skies,

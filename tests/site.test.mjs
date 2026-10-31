@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readFile, readdir, stat } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
+import { THEMES } from '../scripts/seasonal-theme.mjs';
 
 // SITE_DIR lets CI run the same checks against the seasonally themed deploy output.
 const root = process.env.SITE_DIR
@@ -120,7 +121,7 @@ test('portfolio uses square desktop cards, matching local icons, and a mobile st
   assert.match(css, /\.portfolio \{[^}]*grid-template-columns: repeat\(3, minmax\(0, 1fr\)\)/);
   assert.match(css, /\.project \{[^}]*aspect-ratio: 1/);
   assert.match(css, /\.project-name img \{[^}]*width: 44px; height: 44px/);
-  const icons = [...html.matchAll(/<img src="assets\/([^"]+)" width="44" height="44" alt="">/g)].map(match => match[1]);
+  const icons = [...html.matchAll(/<img src="assets\/([^"]+)" width="44" height="44" alt="">/g)].map(match => match[1].split('?')[0]);
   assert.deepEqual(icons, ['sap-framework.svg', 'lekh.svg', 'tech-community.svg']);
   const mobile = css.slice(css.indexOf('@media (max-width: 700px)'));
   assert.match(mobile, /\.project-list \{ grid-template-columns: 1fr; \}/);
@@ -128,13 +129,15 @@ test('portfolio uses square desktop cards, matching local icons, and a mobile st
   assert.doesNotMatch(html, /project-shot|project--text/);
 });
 
-test('all card icons share the approved emerald, ivory, and gold palette', async () => {
+test('all card icons share the base or active seasonal palette', async () => {
+  const season = html.match(/data-season="([^"]+)"/)?.[1];
+  const colors = season ? THEMES[season].colors : { from: '#194c44', to: '#092b2b', accent: '#dcbc7d' };
   for (const name of ['sap-framework.svg', 'lekh.svg', 'tech-community.svg']) {
     const svg = await readFile(new URL(`assets/${name}`, root), 'utf8');
-    assert.match(svg, /<stop stop-color="#194c44"/);
-    assert.match(svg, /<stop offset="1" stop-color="#092b2b"/);
-    assert.match(svg, /fill="#e4eee1"/);
-    assert.match(svg, /stroke="#dcbc7d"/);
+    assert.ok(svg.includes(`<stop stop-color="${colors.from}"`));
+    assert.ok(svg.includes(`<stop offset="1" stop-color="${colors.to}"`));
+    assert.ok(svg.includes(`fill="${season ? colors.accent : '#e4eee1'}"`));
+    assert.ok(svg.includes(`stroke="${colors.accent}"`));
     assert.doesNotMatch(svg, /<script|https?:\/\/(?!www\.w3\.org\/2000\/svg)/);
   }
 });

@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import {
-  THEMES, LUNAR_DATES, applyTheme, localDate, parseDate, selectTheme, thanksgiving,
+  THEMES, LUNAR_DATES, applyTheme, applyIconTheme, localDate, parseDate, selectTheme, thanksgiving,
 } from '../scripts/seasonal-theme.mjs';
 
 const on = value => selectTheme(parseDate(value));
@@ -92,4 +92,24 @@ test('themes are applied without changing identity or adding scripts', async () 
   assert.match(themedProduct, /data-season="diwali"/);
   assert.doesNotMatch(themedProduct, /season-note">/);
   assert.throws(() => applyTheme(html, 'unknown'));
+});
+
+test('every card icon uses the same seasonal background and accent as quick-link badges', async () => {
+  for (const name of ['sap-framework.svg', 'lekh.svg', 'tech-community.svg']) {
+    const original = await readFile(new URL(`../site/assets/${name}`, import.meta.url), 'utf8');
+    for (const [id, { colors }] of Object.entries(THEMES)) {
+      const themed = applyIconTheme(original, id);
+      assert.ok(themed.includes(`<stop stop-color="${colors.from}"`));
+      assert.ok(themed.includes(`<stop offset="1" stop-color="${colors.to}"`));
+      assert.ok(themed.includes(`fill="${colors.accent}"`));
+      assert.ok(themed.includes(`stroke="${colors.to}"`));
+      assert.equal(themed.replace(/#[0-9a-f]{6}\b/g, '#COLOR'), original.replace(/#[0-9a-f]{6}\b/g, '#COLOR'));
+    }
+  }
+  assert.throws(() => applyIconTheme('<svg/>', 'halloween'), /Missing icon palette/);
+  assert.throws(() => applyIconTheme('<svg/>', 'unknown'), /Unknown theme/);
+  const html = await readFile(new URL('../site/index.html', import.meta.url), 'utf8');
+  for (const name of ['sap-framework.svg', 'lekh.svg', 'tech-community.svg']) {
+    assert.ok(applyTheme(html, 'halloween').includes(`assets/${name}?season=halloween`));
+  }
 });
