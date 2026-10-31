@@ -40,7 +40,7 @@ test('local links, images, fonts, and anchors resolve', async () => {
 });
 
 test('homepage has descriptive metadata, social images, and accessible content', async () => {
-  assert.match(html, /<html lang="en">/);
+  assert.match(html, /<html lang="en"(?: data-season="[a-z-]+")?>/);
   assert.match(html, /<meta name="viewport"/);
   assert.equal((html.match(/<h1\b/g) ?? []).length, 1);
   assert.ok(html.includes(`<link rel="canonical" href="${origin}">`));
@@ -217,7 +217,7 @@ test('product navigation matches the homepage capsule on desktop and mobile', ()
 });
 
 test('Lekh page has its own canonical URL, screenshots, and software metadata', async () => {
-  assert.match(productHtml, /<html lang="en">/);
+  assert.match(productHtml, /<html lang="en"(?: data-season="[a-z-]+")?>/);
   assert.match(productHtml, /<meta name="viewport"/);
   assert.match(productHtml, /<title>Lekh - Markdown editor for Windows<\/title>/);
   assert.doesNotMatch(`${html}\n${productHtml}`, /Markdown Studio|MarkdownStudio|markdown-studio\.svg/);
