@@ -38,10 +38,30 @@ The Lekh page uses the same capsule dimensions, home badge, desktop
 uppercase tracking, and 700px mobile navigation breakpoint, with its own Features
 and Download destinations. Keep both page headers visually aligned.
 
-Push to `main`. [Publish website](.github/workflows/pages.yml) validates and deploys
-**only `site`** to GitHub Pages. Repository **Settings > Pages > Source** must be
+Push to `main`. [Publish website](.github/workflows/pages.yml) validates `site`,
+applies the current seasonal theme into `_site`, validates that output, and deploys
+**only `_site`** to GitHub Pages. Repository **Settings > Pages > Source** must be
 **GitHub Actions**. The deployment environment is `github-pages`; deployment runs
 only from `main`. Hosting uses the free public GitHub Pages address.
+
+## Seasonal themes
+
+The site changes its accent colors, background glow, and a small homepage greeting
+through the year without editing `site`. [The theme calendar](scripts/seasonal-theme.mjs)
+picks a theme for the current date in `America/Los_Angeles`:
+
+- Monthly defaults: New Year, warmth, spring, blossoms, bloom, summer, summer skies,
+  late summer, autumn, Halloween (October), gratitude (November), and Christmas (December).
+- Festivals take priority during their windows: Holi, Janmashtami, Ganesh Chaturthi
+  (through Anant Chaturdashi), Navratri (through Dussehra), Diwali, 4th of July,
+  India's Independence Day (15 August), and Thanksgiving week.
+
+The workflow runs daily just after midnight Pacific and deploys only when the theme
+differs from the live site. Hindu festival dates move each year, so add each year's
+dates to `LUNAR_DATES`; the workflow warns when the current or next year is missing.
+Preview any date with `node scripts/seasonal-theme.mjs --date 2026-11-08 --out _site`,
+or run the workflow manually with a date. Run `node --test tests/seasonal-theme.test.mjs`
+after changing the calendar.
 
 Keep SAP Testing Automation Framework first and Lekh second. The
 SAP card links to its repository; Lekh links to

@@ -2,9 +2,12 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile, readdir, stat } from 'node:fs/promises';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 
-const root = new URL('../site/', import.meta.url);
+// SITE_DIR lets CI run the same checks against the seasonally themed deploy output.
+const root = process.env.SITE_DIR
+  ? pathToFileURL(path.resolve(process.env.SITE_DIR) + path.sep)
+  : new URL('../site/', import.meta.url);
 const origin = 'https://dennispadia.github.io/';
 const html = await readFile(new URL('index.html', root), 'utf8');
 const css = html.match(/<style>([\s\S]*?)<\/style>/)[1];
@@ -286,7 +289,9 @@ test('sitemap and deployment include only the approved static site', async () =>
   const robots = await readFile(new URL('robots.txt', root), 'utf8');
   assert.ok(robots.includes(`Sitemap: ${origin}sitemap.xml`));
   const workflow = await readFile(new URL('../.github/workflows/pages.yml', import.meta.url), 'utf8');
-  assert.match(workflow, /path: site\b/);
+  assert.match(workflow, /path: _site\b/);
+  assert.match(workflow, /node scripts\/seasonal-theme\.mjs --source site --out _site/);
+  assert.match(workflow, /schedule:[\s\S]*?- cron: '/);
   assert.match(workflow, /if: github\.ref == 'refs\/heads\/main'/);
   const files = await readdir(root, { recursive: true, withFileTypes: true });
   const allowed = new Set(['.html', '.svg', '.png', '.jpg', '.ttf', '.xml', '.txt']);
