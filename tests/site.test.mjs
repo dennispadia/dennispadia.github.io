@@ -8,8 +8,8 @@ const root = new URL('../site/', import.meta.url);
 const origin = 'https://dennispadia.github.io/';
 const html = await readFile(new URL('index.html', root), 'utf8');
 const css = html.match(/<style>([\s\S]*?)<\/style>/)[1];
-const productOrigin = new URL('MarkdownStudio/', origin).href;
-const productHtml = await readFile(new URL('MarkdownStudio/index.html', root), 'utf8');
+const productOrigin = new URL('lekh/', origin).href;
+const productHtml = await readFile(new URL('lekh/index.html', root), 'utf8');
 
 test('local links, images, fonts, and anchors resolve', async () => {
   for (const [pageUrl, markup] of [[origin, html], [productOrigin, productHtml]]) {
@@ -90,8 +90,9 @@ test('project cards and quick links follow the approved order without release ma
   const projects = [...projectSection.matchAll(/<a class="project(?: project--text)?" href="([^"]+)"/g)].map(match => match[1]);
   assert.deepEqual(projects, [
     'https://github.com/Azure/sap-automation-qa',
-    '/MarkdownStudio/',
+    '/lekh/',
   ]);
+  assert.match(projectSection, /<h3>Lekh - Markdown editor <span/);
   assert.match(html, /Microsoft project &nbsp; \/ &nbsp; SAP on Azure/);
   const quickLinks = html.match(/<div class="start">([\s\S]*?)<\/div>/)[1];
   const destinations = [...quickLinks.matchAll(/<a href="([^"]+)"/g)].map(match => match[1]);
@@ -117,7 +118,7 @@ test('portfolio uses square desktop cards, matching local icons, and a mobile st
   assert.match(css, /\.project \{[^}]*aspect-ratio: 1/);
   assert.match(css, /\.project-name img \{[^}]*width: 44px; height: 44px/);
   const icons = [...html.matchAll(/<img src="assets\/([^"]+)" width="44" height="44" alt="">/g)].map(match => match[1]);
-  assert.deepEqual(icons, ['sap-framework.svg', 'markdown-studio.svg', 'tech-community.svg']);
+  assert.deepEqual(icons, ['sap-framework.svg', 'lekh.svg', 'tech-community.svg']);
   const mobile = css.slice(css.indexOf('@media (max-width: 700px)'));
   assert.match(mobile, /\.project-list \{ grid-template-columns: 1fr; \}/);
   assert.match(mobile, /\.blog \.project \{ width: 100%; \}/);
@@ -125,7 +126,7 @@ test('portfolio uses square desktop cards, matching local icons, and a mobile st
 });
 
 test('all card icons share the approved emerald, ivory, and gold palette', async () => {
-  for (const name of ['sap-framework.svg', 'markdown-studio.svg', 'tech-community.svg']) {
+  for (const name of ['sap-framework.svg', 'lekh.svg', 'tech-community.svg']) {
     const svg = await readFile(new URL(`assets/${name}`, root), 'utf8');
     assert.match(svg, /<stop stop-color="#194c44"/);
     assert.match(svg, /<stop offset="1" stop-color="#092b2b"/);
@@ -212,9 +213,11 @@ test('product navigation matches the homepage capsule on desktop and mobile', ()
   assert.match(productHtml, /href="#download">Download/);
 });
 
-test('Markdown Studio page has its own canonical URL, screenshots, and software metadata', async () => {
+test('Lekh page has its own canonical URL, screenshots, and software metadata', async () => {
   assert.match(productHtml, /<html lang="en">/);
   assert.match(productHtml, /<meta name="viewport"/);
+  assert.match(productHtml, /<title>Lekh - Markdown editor for Windows<\/title>/);
+  assert.doesNotMatch(`${html}\n${productHtml}`, /Markdown Studio|MarkdownStudio|markdown-studio\.svg/);
   assert.equal((productHtml.match(/<h1\b/g) ?? []).length, 1);
   assert.ok(productHtml.includes(`<link rel="canonical" href="${productOrigin}">`));
   assert.ok(productHtml.includes(`<meta property="og:url" content="${productOrigin}">`));
@@ -222,22 +225,31 @@ test('Markdown Studio page has its own canonical URL, screenshots, and software 
   assert.doesNotMatch(productHtml, /noindex|<footer\b|<iframe\b|<script(?! type="application\/ld\+json")/);
   const data = JSON.parse(productHtml.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1]);
   assert.equal(data['@type'], 'SoftwareApplication');
-  assert.equal(data.name, 'Markdown Studio');
+  assert.equal(data.name, 'Lekh - Markdown editor');
   assert.equal(data.url, productOrigin);
+  assert.equal(data.license, 'https://github.com/dennispadia/lekh/blob/main/LICENSE');
+  assert.equal(data.installUrl, 'https://github.com/dennispadia/lekh/releases/latest');
   assert.equal(data.operatingSystem, 'Windows 10/11 x64');
   assert.equal(data.isAccessibleForFree, true);
   assert.equal(data.aggregateRating, undefined);
   const screenshots = [...productHtml.matchAll(/<img class="screenshot"[^>]+>/g)].map(match => match[0]);
-  assert.equal(screenshots.length, 3);
-  for (const image of screenshots) {
+  const expectedScreenshots = [
+    { name: 'publishing-split-dark.png', width: 1344, height: 935 },
+    { name: 'lekh-dark-split.png', width: 1304, height: 835 },
+    { name: 'alerts-light.png', width: 1344, height: 1055 },
+  ];
+  assert.equal(screenshots.length, expectedScreenshots.length);
+  for (const [index, image] of screenshots.entries()) {
+    const { name, width, height } = expectedScreenshots[index];
     assert.match(image, /alt="[^"]+"/);
-    assert.match(image, /width="1440" height="1000"/);
+    assert.ok(image.includes(`width="${width}" height="${height}"`));
     const source = image.match(/src="([^"]+)"/)[1];
     const target = new URL(source, productOrigin);
     assert.equal(target.origin, new URL(origin).origin);
+    assert.equal(target.pathname, `/assets/images/${name}`);
     const bytes = await readFile(new URL(target.pathname.slice(1), root));
-    assert.equal(bytes.readUInt32BE(16), 1440);
-    assert.equal(bytes.readUInt32BE(20), 1000);
+    assert.equal(bytes.readUInt32BE(16), width);
+    assert.equal(bytes.readUInt32BE(20), height);
   }
   for (const [, value] of productHtml.matchAll(/<meta[^>]+(?:property|name)="(?:og:image|twitter:image)" content="([^"]+)"/g)) {
     const target = new URL(value);
@@ -251,16 +263,18 @@ test('product download links stay version-independent and preserve safety and su
   const links = [...productHtml.matchAll(/href="([^"]+)"/g)].map(match => match[1]);
   const releases = links.filter(value => value.includes('/releases/'));
   assert.equal(releases.length, 2);
-  assert.ok(releases.every(value => value === 'https://github.com/dennispadia/MarkdownStudio/releases/latest'));
+  assert.ok(releases.every(value => value === 'https://github.com/dennispadia/lekh/releases/latest'));
   assert.doesNotMatch(productHtml, /v?\d+\.\d+\.\d+|releases\/(?:download|tag)\//);
+  assert.match(productHtml, /Windows x64 setup EXE/);
   assert.match(productHtml, /source ZIP and SHA-256 checksums/);
   assert.match(productHtml, /installer is unsigned/);
-  assert.match(productHtml, /application and MSI are not code-signed/);
+  assert.match(productHtml, /application, setup EXE, and internal MSI are not code-signed/);
   assert.match(productHtml, /Do not disable security protections/);
-  assert.match(productHtml, /shared as-is, without support or promised maintenance/);
-  assert.match(productHtml, /Independent forks are welcome, including AI-assisted changes/);
+  assert.match(productHtml, /provided as-is, without warranty/);
+  assert.match(productHtml, /Independent derivatives are permitted under MIT/);
+  assert.ok(links.includes('https://github.com/dennispadia/lekh/issues'));
   for (const document of ['LICENSE', 'SUPPORT.md', 'CONTRIBUTING.md', 'docs/USER_GUIDE.md', 'docs/BUILDING.md']) {
-    assert.ok(links.includes(`https://github.com/dennispadia/MarkdownStudio/blob/main/${document}`));
+    assert.ok(links.includes(`https://github.com/dennispadia/lekh/blob/main/${document}`));
   }
 });
 
@@ -283,7 +297,7 @@ test('sitemap and deployment include only the approved static site', async () =>
       pages.push(path.relative(fileURLToPath(root), path.join(entry.parentPath, entry.name)).split(path.sep).join('/'));
     }
   }
-  assert.deepEqual(pages.sort(), ['MarkdownStudio/index.html', 'google9f96fa2206ac2708.html', 'index.html'], 'Only the approved portfolio, product page, and Google verification file may be published');
+  assert.deepEqual(pages.sort(), ['google9f96fa2206ac2708.html', 'index.html', 'lekh/index.html'], 'Only the approved portfolio, product page, and Google verification file may be published');
 });
 
 test('Google Search Console verification file retains its required content', async () => {

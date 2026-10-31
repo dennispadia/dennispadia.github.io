@@ -4,16 +4,16 @@ Personal website: **https://dennispadia.github.io/**
 
 A dark, minimalist portfolio with self-hosted Montserrat Light typography,
 a professional introduction and two open-source projects:
-SAP Testing Automation Framework and Markdown Studio, plus a blog card linking
+SAP Testing Automation Framework and Lekh - Markdown editor, plus a blog card linking
 to Dennis's Microsoft Tech Community profile. Plain HTML and CSS;
 no build dependencies, analytics, cookies, or external font/image requests.
 
 ## Editing and publishing
 
 - [Homepage](site/index.html): content, metadata, structured data, and responsive styles.
-- [Markdown Studio page](site/MarkdownStudio/index.html): features, application
+- [Lekh page](site/lekh/index.html): features, application
   screenshots, installation and safety notes, and links to the latest release.
-- [Public assets](site/assets): font and license, icons, text-only social card, and app screenshot.
+- [Public assets](site/assets): font and license, icons, text-only social card, and app screenshots.
 - [Sitemap](site/sitemap.xml) and [crawler policy](site/robots.txt).
 - [Validation](tests/site.test.mjs): links, metadata, identity, project order, privacy, and asset checks.
 
@@ -27,14 +27,14 @@ a systems cube, the existing quill, and an open book, all sharing emerald
 backgrounds, ivory artwork, and gold accents.
 Card descriptions use bottom-aligned metadata without screenshot thumbnails.
 The four hero quick links use matching 32px emerald badges with fine gold artwork,
-coordinated with Markdown Studio's emerald-and-gold icon.
+coordinated with Lekh's emerald-and-gold icon.
 The background is charcoal with a faint, desaturated slate glow and a subtle warm
 counterbalance. The capsule navigation uses a restrained slate-emerald tint,
 a gold home badge, and direct Projects, Blog, About, and GitHub links.
 Mobile navigation uses larger, title-case labels on one line, 44px-high touch
 targets, and a dedicated gap after the home badge. Check the GitHub arrow and
 badge spacing at 320px as well as typical phone widths.
-The Markdown Studio page uses the same capsule dimensions, home badge, desktop
+The Lekh page uses the same capsule dimensions, home badge, desktop
 uppercase tracking, and 700px mobile navigation breakpoint, with its own Features
 and Download destinations. Keep both page headers visually aligned.
 
@@ -43,12 +43,12 @@ Push to `main`. [Publish website](.github/workflows/pages.yml) validates and dep
 **GitHub Actions**. The deployment environment is `github-pages`; deployment runs
 only from `main`. Hosting uses the free public GitHub Pages address.
 
-Keep SAP Testing Automation Framework first and Markdown Studio second. The
-SAP card links to its repository; Markdown Studio links to
-`https://dennispadia.github.io/MarkdownStudio/` (case-sensitive), with its own
+Keep SAP Testing Automation Framework first and Lekh second. The
+SAP card links to its repository; Lekh links to
+`https://dennispadia.github.io/lekh/`, with its own
 GitHub and latest-release links. Do not hard-code application
 versions or version-specific downloads: releases are managed by each project.
-The product page links to GitHub's `/releases/latest`, not a versioned MSI
+The product page links to GitHub's `/releases/latest`, not a versioned installer
 filename. Publishing a new standard release updates that destination without a
 website edit, build dependency, or runtime API request. Drafts and prereleases
 are not the latest standard release. Screenshots describe the demonstrated
@@ -73,7 +73,7 @@ biography, credentials, ratings, reviews, or project claims.
 4. Submit `https://dennispadia.github.io/sitemap.xml`.
 5. Inspect the homepage and request indexing once.
 
-The sitemap lists both the portfolio homepage and `/MarkdownStudio/`. The
+The sitemap lists both the portfolio homepage and `/lekh/`. The
 product page is a static HTML page in this repository, not a separate project
 Pages deployment. When first published, inspect that URL in Search Console
 and optionally request indexing; no separate sitemap submission is needed.
@@ -93,11 +93,11 @@ preview do not include a personal portrait.
 - The [systems cube](site/assets/sap-framework.svg) and
   [open book](site/assets/tech-community.svg) are custom website artwork,
   not official SAP or Microsoft logos.
-- The app icon and screenshot are from
-  [Markdown Studio](https://github.com/dennispadia/MarkdownStudio), MIT licensed.
-  Its [license](https://github.com/dennispadia/MarkdownStudio/blob/main/LICENSE)
-  and [support policy](https://github.com/dennispadia/MarkdownStudio/blob/main/SUPPORT.md)
-  remain unchanged. The site does not embed or execute the desktop application.
+- The app icon and screenshots are from
+  [Lekh](https://github.com/dennispadia/lekh), MIT licensed.
+  Its [license](https://github.com/dennispadia/lekh/blob/main/LICENSE)
+  and [support policy](https://github.com/dennispadia/lekh/blob/main/SUPPORT.md)
+  are maintained in that repository. The site does not embed or execute the desktop application.
 - SAP Testing Automation Framework remains maintained in its
   [Microsoft-owned repository](https://github.com/Azure/sap-automation-qa).
 
