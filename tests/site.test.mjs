@@ -239,6 +239,7 @@ test('Lekh page has its own canonical URL, screenshots, and software metadata', 
     { name: 'alerts-light.png', width: 1344, height: 1055 },
   ];
   assert.equal(screenshots.length, expectedScreenshots.length);
+  assert.match(productHtml, /\.gallery \.screenshot \{ aspect-ratio: 1304 \/ 835; object-fit: cover; object-position: top left; \}/);
   for (const [index, image] of screenshots.entries()) {
     const { name, width, height } = expectedScreenshots[index];
     assert.match(image, /alt="[^"]+"/);
