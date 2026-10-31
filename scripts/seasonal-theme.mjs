@@ -94,7 +94,18 @@ export function themeCss(id) {
     ${scope} header { border-color: ${border}; }
     ${scope} .home svg, ${scope} .start .icon { background: linear-gradient(135deg, ${from}, ${to}); color: ${accent}; border-color: ${border}; }
     ${scope} nav a:hover, ${scope} h1 span { color: ${accent}; }
-    ${scope} .project:hover { border-color: ${border}; }
+    ${scope} .project, ${scope} .feature, ${scope} .download-panel { border-color: ${border}; background: linear-gradient(160deg, ${from}66, #151718 55%); }
+    ${scope} .project:hover { border-color: ${accent}; box-shadow: 0 0 0 1px ${accent}55, 0 10px 30px ${from}55; }
+    ${scope} .project-name img, ${scope} .app-mark { border-radius: 8px; box-shadow: 0 0 0 1px ${border}, 0 0 18px ${accent}33; }
+    ${scope} .project .meta, ${scope} .eyebrow, ${scope} .label, ${scope} .feature h3 { color: ${accent}; }
+    ${scope} .section-heading h2, ${scope} h2 { color: ${accent}; }
+    ${scope} .start a { border-bottom-color: ${border}; }
+    ${scope} .start a:hover, ${scope} .text-link { color: ${accent}; }
+    ${scope} .button { background: linear-gradient(135deg, ${from}, ${to}); border-color: ${border}; }
+    ${scope} .button:hover { border-color: ${accent}; }
+    ${scope} .screenshot { border-color: ${border}; }
+    ${scope} .hero { position: relative; isolation: isolate; }
+    ${scope} .hero::after { content: "${THEMES[id].emoji}"; position: absolute; z-index: -1; top: 40px; right: 0; font-size: clamp(90px, 14vw, 150px); line-height: 1; opacity: .12; pointer-events: none; }
     ${scope} .season-note { display: inline-flex; align-items: center; gap: 8px; margin: 18px 0 0 .25em; padding: 6px 14px; border: 1px solid ${border}; border-radius: 999px; background: linear-gradient(135deg, ${from}, ${to}); color: ${accent}; font-size: 12px; letter-spacing: .4px; }
   `;
 }

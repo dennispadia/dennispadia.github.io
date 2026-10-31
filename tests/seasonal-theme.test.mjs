@@ -82,6 +82,8 @@ test('themes are applied without changing identity or adding scripts', async () 
   assert.match(themed, /<html lang="en" data-season="diwali">/);
   assert.match(themed, /<p class="season-note"><span aria-hidden="true">🪔<\/span>Happy Diwali<\/p>/);
   assert.match(themed, /html\[data-season="diwali"\] \.start \.icon/);
+  assert.match(themed, /html\[data-season="diwali"\] \.project, [^{]+\{ border-color: #ffc95c66;/);
+  assert.match(themed, /html\[data-season="diwali"\] \.hero::after \{ content: "🪔";/);
   assert.equal((themed.match(/<style>/g) ?? []).length, 1);
   assert.equal((themed.match(/<script/g) ?? []).length, 1);
   assert.ok(themed.includes('<p class="intro">Principal Software Architect at Microsoft</p>'));
