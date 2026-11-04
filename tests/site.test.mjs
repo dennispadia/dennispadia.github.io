@@ -242,7 +242,9 @@ test('Lekh page has its own canonical URL, screenshots, and software metadata', 
   const expectedScreenshots = [
     { name: 'publishing-split-dark.png', width: 1344, height: 935 },
     { name: 'lekh-dark-split.png', width: 1304, height: 835 },
-    { name: 'alerts-light.png', width: 1344, height: 1055 },
+    { name: 'slash-menu.png', width: 1304, height: 835 },
+    { name: 'export-panel.png', width: 1304, height: 835 },
+    { name: 'block-toolbar.png', width: 1304, height: 835 },
   ];
   assert.equal(screenshots.length, expectedScreenshots.length);
   assert.match(productHtml, /\.gallery \.screenshot \{ aspect-ratio: 1304 \/ 835; object-fit: cover; object-position: top left; \}/);
@@ -264,6 +266,24 @@ test('Lekh page has its own canonical URL, screenshots, and software metadata', 
     assert.ok((await stat(new URL(target.pathname.slice(1), root))).isFile());
   }
   assert.doesNotMatch(productHtml, /googletagmanager|goatcounter|@import/);
+});
+
+test('product page explains current writing, review, and export capabilities', () => {
+  for (const feature of [
+    'Visual, Markdown, and Split.', 'Ctrl+Shift+P', 'Structure &gt; Include',
+    'include relationships', 'Learn checks', 'Offline English grammar',
+    'coordinated icons and dialogs', 'Interactive HTML', 'Check again',
+  ]) {
+    assert.ok(productHtml.includes(feature), `Missing current feature: ${feature}`);
+  }
+  assert.match(productHtml, /Word and PDF are disabled/);
+  assert.match(productHtml, /including those in local includes/);
+  assert.match(productHtml, /Remote images and missing or unauthorized includes stop export/);
+  assert.match(productHtml, /Convert WebP images before Word export/);
+  assert.match(productHtml, /math and footnotes are not rendered as formatted output/);
+  assert.match(productHtml, /no administrator access is needed/);
+  assert.match(productHtml, /downgrades are blocked/);
+  assert.doesNotMatch(productHtml, /Source \+ Preview/);
 });
 
 test('product download links stay version-independent and preserve safety and support policies', () => {

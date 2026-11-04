@@ -12,7 +12,10 @@ no build dependencies, analytics, cookies, or external font/image requests.
 
 - [Homepage](site/index.html): content, metadata, structured data, and responsive styles.
 - [Lekh page](site/lekh/index.html): features, application
-  screenshots, installation and safety notes, and links to the latest release.
+  screenshots, Visual/Markdown editing, publishing blocks, local includes and
+  review tools, HTML/Word/PDF export limitations, installation and safety notes,
+  and links to the latest release. Refresh screenshots from the released Lekh
+  repository's `docs/images` and keep image dimensions and captions accurate.
 - [Public assets](site/assets): font and license, icons, text-only social card, and app screenshots.
 - [Sitemap](site/sitemap.xml) and [crawler policy](site/robots.txt).
 - [Validation](tests/site.test.mjs): links, metadata, identity, project order, privacy, and asset checks.
